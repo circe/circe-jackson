@@ -72,7 +72,7 @@ lazy val jackson25 = project.in(file("25"))
   .settings(
     moduleName := "circe-jackson25",
     libraryDependencies ++= jacksonDependencies("2.5.5"),
-    mimaPreviousArtifacts := Set("io.circe" %% moduleName.value % previousCirceJacksonVersion)
+    mimaPreviousArtifacts := Set("io.circe" %% "circe-jackson" % previousCirceJacksonVersion)
   )
 
 lazy val jackson26 = project.in(file("26"))

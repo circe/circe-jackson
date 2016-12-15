@@ -103,5 +103,5 @@ private[jackson] final class CirceJsonDeserializer(factory: TypeFactory, klass: 
     }
   }
 
-  override final def getNullValue: Json = Json.JNull
+  override final def getNullValue = Json.JNull
 }

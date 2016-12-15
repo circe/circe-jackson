@@ -20,7 +20,7 @@ the source supporting Jackson 2.6 and 2.7 is identical, so these version share a
 All circe projects support the [Typelevel][typelevel] [code of conduct][code-of-conduct] and we want
 all of their channels (Gitter, GitHub, etc.) to be welcoming environments for everyone.
 
-Please see the [circe contributors' guide](contributing) for details on how to submit a pull
+Please see the [circe contributors' guide][contributing] for details on how to submit a pull
 request.
 
 ## License

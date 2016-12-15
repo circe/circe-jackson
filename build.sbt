@@ -93,7 +93,7 @@ lazy val jackson27 = project.in(file("27"))
 lazy val jackson28 = project.in(file("28"))
   .settings(allSettings)
   .settings(
-    moduleName := "circe-jackson",
+    moduleName := "circe-jackson28",
     libraryDependencies ++= jacksonDependencies("2.8.5"),
     docMappingsApiDir := "api",
     addMappingsToSiteDir(mappings in (Compile, packageDoc), docMappingsApiDir),

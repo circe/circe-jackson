@@ -9,9 +9,8 @@ This project provides support for using [Jackson][jackson] for JSON parsing and 
 [circe][circe], a Scala library for encoding and decoding JSON to Scala types.
 
 Several versions of Jackson are still in widespread use, and `io.circe.jackson` is cross-published
-for 2.5, 2.6, 2.7, and 2.8. The artifact supporting the most recent Jackson version is always named
-`circe-jackson`, while older versions have a two digit suffix on the artifact name
-(`circe-jackson25`, `circe-jackson26`, etc.).
+with support for Jackson 2.5, 2.6, 2.7, and 2.8. Each module has a two-digit suffix indicating its
+Jackson version (`circe-jackson28` supports Jackson 2.8, etc.).
 
 The project source is mostly shared, with version-specific code in separate source trees. Note that
 the source supporting Jackson 2.6 and 2.7 is identical, so these version share a source tree.

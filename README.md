@@ -14,7 +14,7 @@ for 2.5, 2.6, 2.7, and 2.8. The artifact supporting the most recent Jackson vers
 (`circe-jackson25`, `circe-jackson26`, etc.).
 
 The project source is mostly shared, with version-specific code in separate source trees. Note that
-the source for Jackson 2.6 and 2.7 is identical, so these version share a source tree.
+the source supporting Jackson 2.6 and 2.7 is identical, so these version share a source tree.
 
 ## Contributors and participation
 

@@ -13,13 +13,13 @@ import com.fasterxml.jackson.core.util.DefaultPrettyPrinter
  *
  * The implementation is ported with minimal changes from Play JSON.
  */
-package object jackson extends WithJacksonMapper with JacksonParser {
+package object jackson extends WithJacksonMapper with JacksonParser with JacksonCompat {
   final def jacksonPrint(json: Json): String = {
     val sw = new java.io.StringWriter
     val gen = stringJsonGenerator(sw).setPrettyPrinter(
       new DefaultPrettyPrinter()
     )
-    val writer = mapper.writerWithDefaultPrettyPrinter()
+    val writer = makeWriter(mapper)
     writer.writeValue(gen, json)
     sw.flush()
     sw.getBuffer.toString

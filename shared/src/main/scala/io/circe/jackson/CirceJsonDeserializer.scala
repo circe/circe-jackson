@@ -33,12 +33,12 @@ private[jackson] final case class ReadingMap(content: ArrayList[(String, Json)])
 }
 
 private[jackson] final class CirceJsonDeserializer(factory: TypeFactory, klass: Class[_])
-  extends JsonDeserializer[Object] {
+  extends JsonDeserializer[Object] with JacksonCompat {
   override final def isCachable: Boolean = true
 
   override final def deserialize(jp: JsonParser, ctxt: DeserializationContext): Json = {
     val value = deserialize(jp, ctxt, List())
-    if (!klass.isAssignableFrom(value.getClass)) ctxt.handleUnexpectedToken(klass, jp)
+    if (!klass.isAssignableFrom(value.getClass)) handleUnexpectedToken(ctxt)(klass, jp)
 
     value
   }
@@ -103,5 +103,5 @@ private[jackson] final class CirceJsonDeserializer(factory: TypeFactory, klass: 
     }
   }
 
-  override final def getNullValue = Json.JNull
+  override final def getNullValue: Json = Json.JNull
 }

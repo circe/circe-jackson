@@ -38,5 +38,6 @@ limitations under the License.
 [apache]: http://www.apache.org/licenses/LICENSE-2.0
 [circe]: https://github.com/circe/circe
 [code-of-conduct]: http://typelevel.org/conduct.html
+[contributing]: https://circe.github.io/circe/contributing.html
 [jackson]: https://github.com/FasterXML/jackson
 [typelevel]: http://typelevel.org/

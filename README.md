@@ -15,6 +15,9 @@ Jackson version (`circe-jackson28` supports Jackson 2.8, etc.).
 The project source is mostly shared, with version-specific code in separate source trees. Note that
 the source supporting Jackson 2.6 and 2.7 is identical, so these version share a source tree.
 
+There's not a lot of documentation, but the API is fairly minimal, and we do publish the
+[API docs][api-docs].
+
 ## Contributors and participation
 
 All circe projects support the [Typelevel][typelevel] [code of conduct][code-of-conduct] and we want
@@ -36,6 +39,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 [apache]: http://www.apache.org/licenses/LICENSE-2.0
+[api-docs]: https://circe.github.io/circe-jackson/api/io/circe/jackson/
 [circe]: https://github.com/circe/circe
 [code-of-conduct]: http://typelevel.org/conduct.html
 [contributing]: https://circe.github.io/circe/contributing.html

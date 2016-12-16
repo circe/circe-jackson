@@ -93,7 +93,7 @@ lazy val jackson27 = project.in(file("27"))
   )
 
 lazy val jackson28 = project.in(file("28"))
-  .settings(allSettings)
+  .settings(allSettings ++ ghpages.settings)
   .settings(
     moduleName := "circe-jackson28",
     libraryDependencies ++= jacksonDependencies("2.8.5"),
@@ -106,6 +106,7 @@ lazy val jackson28 = project.in(file("28"))
       "-doc-source-url", scmInfo.value.get.browseUrl + "/tree/master€{FILE_PATH}.scala",
       "-sourcepath", baseDirectory.in(LocalRootProject).value.getAbsolutePath
     ),
+    git.remoteRepo := "git@github.com:circe/circe-jackson.git",
     autoAPIMappings := true,
     apiURL := Some(url("https://circe.github.io/circe-jackson/api/")),
     mimaPreviousArtifacts := Set("io.circe" %% "circe-jackson28" % previousCirceJacksonVersion)

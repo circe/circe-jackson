@@ -16,7 +16,7 @@ val compilerOptions = Seq(
 )
 
 val circeVersion = "0.7.0-M1"
-val previousCirceJacksonVersion = "0.6.1"
+val previousCirceJacksonVersion = "0.6.2"
 
 val baseSettings = Seq(
   scalacOptions ++= compilerOptions ++ (
@@ -72,7 +72,7 @@ lazy val jackson25 = project.in(file("25"))
   .settings(
     moduleName := "circe-jackson25",
     libraryDependencies ++= jacksonDependencies("2.5.5"),
-    mimaPreviousArtifacts := Set("io.circe" %% "circe-jackson" % previousCirceJacksonVersion)
+    mimaPreviousArtifacts := Set("io.circe" %% "circe-jackson25" % previousCirceJacksonVersion)
   )
 
 lazy val jackson26 = project.in(file("26"))
@@ -80,14 +80,16 @@ lazy val jackson26 = project.in(file("26"))
   .settings(
     moduleName := "circe-jackson26",
     libraryDependencies ++= jacksonDependencies("2.6.7"),
-    unmanagedSourceDirectories in Compile += (baseDirectory in ThisBuild).value / "27"
+    unmanagedSourceDirectories in Compile += (baseDirectory in ThisBuild).value / "27",
+    mimaPreviousArtifacts := Set("io.circe" %% "circe-jackson26" % previousCirceJacksonVersion)
   )
 
 lazy val jackson27 = project.in(file("27"))
   .settings(allSettings)
   .settings(
     moduleName := "circe-jackson27",
-    libraryDependencies ++= jacksonDependencies("2.7.8")
+    libraryDependencies ++= jacksonDependencies("2.7.8"),
+    mimaPreviousArtifacts := Set("io.circe" %% "circe-jackson27" % previousCirceJacksonVersion)
   )
 
 lazy val jackson28 = project.in(file("28"))
@@ -105,7 +107,8 @@ lazy val jackson28 = project.in(file("28"))
       "-sourcepath", baseDirectory.in(LocalRootProject).value.getAbsolutePath
     ),
     autoAPIMappings := true,
-    apiURL := Some(url("https://circe.github.io/circe-jackson/api/"))
+    apiURL := Some(url("https://circe.github.io/circe-jackson/api/")),
+    mimaPreviousArtifacts := Set("io.circe" %% "circe-jackson28" % previousCirceJacksonVersion)
   )
 
 lazy val noPublishSettings = Seq(

@@ -111,6 +111,21 @@ lazy val jackson28 = project.in(file("28"))
     mimaPreviousArtifacts := Set("io.circe" %% "circe-jackson28" % previousCirceJacksonVersion)
   )
 
+lazy val benchmark = project.in(file("benchmark"))
+  .settings(noPublishSettings)
+  .settings(
+    crossScalaVersions := crossScalaVersions.value.init,
+    libraryDependencies ++= Seq(
+      "io.circe" %% "circe-core" % circeVersion,
+      "io.circe" %% "circe-generic" % circeVersion,
+      "io.circe" %% "circe-jawn" % circeVersion,
+      "io.circe" %% "circe-parser" % circeVersion % "test",
+      "org.scalatest" %% "scalatest" % "3.0.1" % "test"
+    )
+  )
+  .enablePlugins(JmhPlugin)
+  .dependsOn(jackson25, jackson26, jackson27, jackson28)
+
 lazy val noPublishSettings = Seq(
   publish := (),
   publishLocal := (),

@@ -64,7 +64,7 @@ val allSettings = baseSettings ++ publishSettings
 
 val root = project.in(file("."))
   .settings(allSettings ++ noPublishSettings)
-  .aggregate(jackson25, jackson26, jackson27, jackson28)
+  .aggregate(jackson25, jackson26, jackson27, jackson28, benchmark)
   .dependsOn(jackson28)
 
 lazy val jackson25 = project.in(file("25"))

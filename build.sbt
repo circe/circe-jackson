@@ -64,7 +64,7 @@ val allSettings = baseSettings ++ publishSettings
 
 val root = project.in(file("."))
   .settings(allSettings ++ noPublishSettings)
-  .aggregate(jackson25, jackson26, jackson27, jackson28)
+  .aggregate(jackson25, jackson26, jackson27, jackson28, benchmark)
   .dependsOn(jackson28)
 
 lazy val jackson25 = project.in(file("25"))
@@ -111,6 +111,22 @@ lazy val jackson28 = project.in(file("28"))
     apiURL := Some(url("https://circe.github.io/circe-jackson/api/")),
     mimaPreviousArtifacts := Set("io.circe" %% "circe-jackson28" % previousCirceJacksonVersion)
   )
+
+lazy val benchmark = project.in(file("benchmark"))
+  .settings(noPublishSettings)
+  .settings(
+    crossScalaVersions := crossScalaVersions.value.init,
+    libraryDependencies ++= Seq(
+      "io.circe" %% "circe-core" % circeVersion,
+      "io.circe" %% "circe-generic" % circeVersion,
+      "io.circe" %% "circe-jawn" % circeVersion,
+      "io.circe" %% "circe-parser" % circeVersion % "test",
+      "org.scalatest" %% "scalatest" % "3.0.1" % "test",
+      compilerPlugin("org.scalamacros" % "paradise" % "2.1.0" % "test" cross CrossVersion.full)
+    )
+  )
+  .enablePlugins(JmhPlugin)
+  .dependsOn(jackson25, jackson26, jackson27, jackson28)
 
 lazy val noPublishSettings = Seq(
   publish := (),

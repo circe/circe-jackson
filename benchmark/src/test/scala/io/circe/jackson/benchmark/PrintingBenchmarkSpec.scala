@@ -9,10 +9,10 @@ class PrintingBenchmarkSpec extends FlatSpec {
   import benchmark._
 
   private[this] def decodeInts(json: String): Option[List[Int]] =
-    decode[List[Int]](json).toOption
+    decode[List[Int]](json).fold(_ => None, Some(_))
 
   private[this] def decodeFoos(json: String): Option[Map[String, Foo]] =
-    decode[Map[String, Foo]](json).toOption
+    decode[Map[String, Foo]](json).fold(_ => None, Some(_))
 
   it should "correctly print integers using Circe with Jackson" in {
     assert(decodeInts(printIntsCJ) === Some(ints))

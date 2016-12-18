@@ -120,7 +120,8 @@ lazy val benchmark = project.in(file("benchmark"))
       "io.circe" %% "circe-generic" % circeVersion,
       "io.circe" %% "circe-jawn" % circeVersion,
       "io.circe" %% "circe-parser" % circeVersion % "test",
-      "org.scalatest" %% "scalatest" % "3.0.1" % "test"
+      "org.scalatest" %% "scalatest" % "3.0.1" % "test",
+      compilerPlugin("org.scalamacros" % "paradise" % "2.1.0" % "test" cross CrossVersion.full)
     )
   )
   .enablePlugins(JmhPlugin)

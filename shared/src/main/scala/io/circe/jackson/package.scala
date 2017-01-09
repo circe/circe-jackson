@@ -1,6 +1,8 @@
 package io.circe
 
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter
+import java.io.{ BufferedWriter, ByteArrayOutputStream, OutputStreamWriter, StringWriter, Writer }
+import java.nio.ByteBuffer
 
 /**
  * Support for Jackson-powered parsing and printing for circe.
@@ -14,14 +16,29 @@ import com.fasterxml.jackson.core.util.DefaultPrettyPrinter
  * The implementation is ported with minimal changes from Play JSON.
  */
 package object jackson extends WithJacksonMapper with JacksonParser with JacksonCompat {
-  final def jacksonPrint(json: Json): String = {
-    val sw = new java.io.StringWriter
-    val gen = stringJsonGenerator(sw).setPrettyPrinter(
+
+  private[this] def writeJson(w: Writer, j: Json): Unit = {
+    val gen = jsonGenerator(w).setPrettyPrinter(
       new DefaultPrettyPrinter()
     )
-    val writer = makeWriter(mapper)
-    writer.writeValue(gen, json)
-    sw.flush()
-    sw.getBuffer.toString
+
+    makeWriter(mapper).writeValue(gen, j)
+    w.flush()
+  }
+
+  final def jacksonPrint(json: Json): String = {
+    val sw = new StringWriter
+    writeJson(sw, json)
+    sw.toString
+  }
+
+  private[this] class EnhancedByteArrayOutputStream extends ByteArrayOutputStream {
+    def toByteBuffer: ByteBuffer = ByteBuffer.wrap(this.buf, 0, this.size)
+  }
+
+  final def jacksonPrintByteBuffer(json: Json): ByteBuffer = {
+    val bytes = new EnhancedByteArrayOutputStream
+    writeJson(new BufferedWriter(new OutputStreamWriter(bytes, "UTF-8")), json)
+    bytes.toByteBuffer
   }
 }

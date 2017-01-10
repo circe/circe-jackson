@@ -4,6 +4,7 @@ import cats.Eq
 import io.circe.{ Decoder, Encoder, Json => JsonC }
 import io.circe.generic.semiauto._
 import io.circe.jawn._
+import java.nio.ByteBuffer
 import java.util.concurrent.TimeUnit
 import org.openjdk.jmh.annotations._
 
@@ -70,11 +71,17 @@ class PrintingBenchmark extends ExampleData {
   def printIntsC: String = intsC.noSpaces
 
   @Benchmark
-  def printIntsCJ: String = io.circe.jackson.jacksonPrint(intsC)
+  def printIntsCJString: String = io.circe.jackson.jacksonPrint(intsC)
+
+  @Benchmark
+  def printIntsCJBytes: ByteBuffer = io.circe.jackson.jacksonPrintByteBuffer(intsC)
 
   @Benchmark
   def printFoosC: String = foosC.noSpaces
 
   @Benchmark
-  def printFoosCJ: String = io.circe.jackson.jacksonPrint(foosC)
+  def printFoosCJString: String = io.circe.jackson.jacksonPrint(foosC)
+
+  @Benchmark
+  def printFoosCJBytes: ByteBuffer = io.circe.jackson.jacksonPrintByteBuffer(foosC)
 }

@@ -18,6 +18,7 @@ import io.circe.testing.ArbitraryInstances
 import org.scalacheck.Arbitrary
 import scala.util.matching.Regex
 import scala.util.Try
+import java.nio.ByteBuffer
 
 trait JacksonInstances { this: ArbitraryInstances =>
   /**
@@ -31,6 +32,8 @@ trait JacksonInstances { this: ArbitraryInstances =>
     case (JNumber(a), JString(b)) => a.toString == b
     case (a, b) => Json.eqJson.eqv(a, b)
   }
+
+  implicit val eqByteBuffer: Eq[ByteBuffer] = Eq.fromUniversalEquals
 
   private[this] val SigExpPattern: Regex = """[^eE]+[eE][+-]?(\d+)""".r
   private[this] val replacement: JsonNumber = JsonBiggerDecimal(BiggerDecimal.fromLong(0L))

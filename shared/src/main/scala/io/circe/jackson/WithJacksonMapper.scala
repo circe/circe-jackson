@@ -2,7 +2,7 @@ package io.circe.jackson
 
 import com.fasterxml.jackson.core.{ JsonFactory, JsonParser }
 import com.fasterxml.jackson.databind.ObjectMapper
-import java.io.{ File, StringWriter }
+import java.io.{ File, Writer }
 
 class WithJacksonMapper {
   protected final val mapper: ObjectMapper = (new ObjectMapper).registerModule(CirceJsonModule)
@@ -12,5 +12,5 @@ class WithJacksonMapper {
   protected final def jsonFileParser(file: File): JsonParser = jsonFactory.createParser(file)
   protected final def jsonBytesParser(bytes: Array[Byte]): JsonParser =
     jsonFactory.createParser(bytes)
-  protected final def stringJsonGenerator(out: StringWriter) = jsonFactory.createGenerator(out)
+  protected final def jsonGenerator(out: Writer) = jsonFactory.createGenerator(out)
 }

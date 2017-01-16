@@ -1,6 +1,5 @@
 package io.circe
 
-import com.fasterxml.jackson.core.util.DefaultPrettyPrinter
 import java.io.{ BufferedWriter, ByteArrayOutputStream, OutputStreamWriter, StringWriter, Writer }
 import java.nio.ByteBuffer
 
@@ -18,10 +17,7 @@ import java.nio.ByteBuffer
 package object jackson extends WithJacksonMapper with JacksonParser with JacksonCompat {
 
   private[this] def writeJson(w: Writer, j: Json): Unit = {
-    val gen = jsonGenerator(w).setPrettyPrinter(
-      new DefaultPrettyPrinter()
-    )
-
+    val gen = jsonGenerator(w)
     makeWriter(mapper).writeValue(gen, j)
     w.flush()
   }

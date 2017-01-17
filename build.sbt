@@ -45,8 +45,8 @@ val baseSettings = Seq(
   (scalastyleSources in Compile) ++= (unmanagedSourceDirectories in Compile).value,
   libraryDependencies ++= Seq(
     "io.circe" %% "circe-core" % circeVersion,
-    "io.circe" %% "circe-jawn" % circeVersion % "test",
-    "io.circe" %% "circe-testing" % circeVersion % "test"
+    "io.circe" %% "circe-jawn" % circeVersion % Test,
+    "io.circe" %% "circe-testing" % circeVersion % Test
   ),
   unmanagedSourceDirectories in Compile += (baseDirectory in ThisBuild).value / "shared/src/main",
   unmanagedSourceDirectories in Test += (baseDirectory in ThisBuild).value / "shared/src/test",
@@ -120,9 +120,9 @@ lazy val benchmark = project.in(file("benchmark"))
       "io.circe" %% "circe-core" % circeVersion,
       "io.circe" %% "circe-generic" % circeVersion,
       "io.circe" %% "circe-jawn" % circeVersion,
-      "io.circe" %% "circe-parser" % circeVersion % "test",
-      "org.scalatest" %% "scalatest" % "3.0.1" % "test",
-      compilerPlugin("org.scalamacros" % "paradise" % "2.1.0" % "test" cross CrossVersion.full)
+      "io.circe" %% "circe-parser" % circeVersion % Test,
+      "org.scalatest" %% "scalatest" % "3.0.1" % Test,
+      compilerPlugin("org.scalamacros" % "paradise" % "2.1.0" % Test cross CrossVersion.full)
     )
   )
   .enablePlugins(JmhPlugin)

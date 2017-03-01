@@ -1,5 +1,3 @@
-import com.typesafe.sbt.SbtGhPages.GhPagesKeys._
-
 organization in ThisBuild := "io.circe"
 
 val compilerOptions = Seq(
@@ -93,7 +91,8 @@ lazy val jackson27 = project.in(file("27"))
   )
 
 lazy val jackson28 = project.in(file("28"))
-  .settings(allSettings ++ ghpages.settings)
+  .enablePlugins(GhpagesPlugin)
+  .settings(allSettings)
   .settings(
     moduleName := "circe-jackson28",
     libraryDependencies ++= jacksonDependencies("2.8.5"),

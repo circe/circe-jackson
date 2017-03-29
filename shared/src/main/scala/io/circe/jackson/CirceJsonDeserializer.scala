@@ -89,11 +89,10 @@ private[jackson] final class CirceJsonDeserializer(factory: TypeFactory, klass: 
         throw new RuntimeException("We weren't reading an object, something went wrong")
     }
 
-    jp.nextToken()
-
     maybeValue match {
       case Some(v) if nextContext.isEmpty => v
       case maybeValue =>
+        jp.nextToken()
         val toPass = maybeValue.map { v =>
           val previous :: stack = nextContext
           (previous.addValue(v)) +: stack

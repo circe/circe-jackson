@@ -86,7 +86,7 @@ lazy val jackson27 = project.in(file("27"))
   .settings(allSettings)
   .settings(
     moduleName := "circe-jackson27",
-    libraryDependencies ++= jacksonDependencies("2.7.8"),
+    libraryDependencies ++= jacksonDependencies("2.7.9"),
     mimaPreviousArtifacts := Set("io.circe" %% "circe-jackson27" % previousCirceJacksonVersion)
   )
 
@@ -95,7 +95,7 @@ lazy val jackson28 = project.in(file("28"))
   .settings(allSettings)
   .settings(
     moduleName := "circe-jackson28",
-    libraryDependencies ++= jacksonDependencies("2.8.5"),
+    libraryDependencies ++= jacksonDependencies("2.8.7"),
     docMappingsApiDir := "api",
     addMappingsToSiteDir(mappings in (Compile, packageDoc), docMappingsApiDir),
     ghpagesNoJekyll := true,

@@ -9,6 +9,7 @@ import io.circe.{
   JsonBiggerDecimal,
   JsonDecimal,
   JsonDouble,
+  JsonFloat,
   JsonLong,
   JsonNumber
 }
@@ -57,6 +58,7 @@ trait JacksonInstances { this: ArbitraryInstances =>
         }
       case v @ JsonBigDecimal(_) => v
       case v @ JsonDouble(_) => v
+      case v @ JsonFloat(_) => v
       case v @ JsonLong(_) => v
     }
   }

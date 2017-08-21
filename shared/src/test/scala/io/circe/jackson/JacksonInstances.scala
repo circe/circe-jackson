@@ -64,7 +64,7 @@ trait JacksonInstances { this: ArbitraryInstances =>
   }
 
   def cleanNumbers(json: Json): Json =
-    json.mapNumber(cleanNumber).mapArray(_.map(cleanNumbers)).mapObject(_.withJsons(cleanNumbers))
+    json.mapNumber(cleanNumber).mapArray(_.map(cleanNumbers)).mapObject(_.mapValues(cleanNumbers))
 
   val arbitraryCleanedJson: Arbitrary[Json] = Arbitrary(Arbitrary.arbitrary[Json].map(cleanNumbers))
 }

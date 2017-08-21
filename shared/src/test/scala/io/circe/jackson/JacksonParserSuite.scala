@@ -11,14 +11,14 @@ import java.io.{ByteArrayInputStream, File}
 import scala.io.Source
 
 class JacksonParserSuite extends CirceSuite with JacksonInstances {
-  checkLaws("Parser", ParserTests(`package`).fromString(arbitraryCleanedJson))
+  checkLaws("Parser", ParserTests(`package`).fromString(arbitraryCleanedJson, shrinkJson))
   checkLaws("Parser", ParserTests(`package`)
     .fromFunction[Array[Byte]]("fromByteArray")(
       s => s.getBytes("UTF-8"),
       p => p.parseByteArray _,
       p => p.decodeByteArray[Json] _,
       p => p.decodeByteArrayAccumulating[Json] _
-    )(arbitraryCleanedJson)
+    )(arbitraryCleanedJson, shrinkJson)
   )
 
   "parse and decode(Accumulating)" should "fail on invalid input" in forAll { (s: String) =>

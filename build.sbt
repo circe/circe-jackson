@@ -95,7 +95,7 @@ lazy val jackson28 = project.in(file("28"))
   .settings(allSettings)
   .settings(
     moduleName := "circe-jackson28",
-    libraryDependencies ++= jacksonDependencies("2.8.8"),
+    libraryDependencies ++= jacksonDependencies("2.8.9"),
     docMappingsApiDir := "api",
     addMappingsToSiteDir(mappings in (Compile, packageDoc), docMappingsApiDir),
     ghpagesNoJekyll := true,

@@ -62,7 +62,7 @@ val allSettings = baseSettings ++ publishSettings
 
 val root = project.in(file("."))
   .settings(allSettings ++ noPublishSettings)
-  .aggregate(jackson25, jackson26, jackson27, jackson28, benchmark)
+  .aggregate(jackson25, jackson26, jackson27, jackson28, jackson29, benchmark)
   .dependsOn(jackson28)
 
 lazy val jackson25 = project.in(file("25"))
@@ -95,7 +95,7 @@ lazy val jackson28 = project.in(file("28"))
   .settings(allSettings)
   .settings(
     moduleName := "circe-jackson28",
-    libraryDependencies ++= jacksonDependencies("2.8.9"),
+    libraryDependencies ++= jacksonDependencies("2.8.10"),
     docMappingsApiDir := "api",
     addMappingsToSiteDir(mappings in (Compile, packageDoc), docMappingsApiDir),
     ghpagesNoJekyll := true,
@@ -111,6 +111,15 @@ lazy val jackson28 = project.in(file("28"))
     mimaPreviousArtifacts := Set("io.circe" %% "circe-jackson28" % previousCirceJacksonVersion)
   )
 
+lazy val jackson29 = project.in(file("29"))
+  .settings(allSettings)
+  .settings(
+    moduleName := "circe-jackson29",
+    libraryDependencies ++= jacksonDependencies("2.9.2"),
+    unmanagedSourceDirectories in Compile += (baseDirectory in ThisBuild).value / "28",
+    mimaPreviousArtifacts := Set("io.circe" %% "circe-jackson29" % previousCirceJacksonVersion)
+  )
+
 lazy val benchmark = project.in(file("benchmark"))
   .settings(noPublishSettings)
   .settings(
@@ -120,7 +129,7 @@ lazy val benchmark = project.in(file("benchmark"))
       "io.circe" %% "circe-generic" % circeVersion,
       "io.circe" %% "circe-jawn" % circeVersion,
       "io.circe" %% "circe-parser" % circeVersion % Test,
-      "org.scalatest" %% "scalatest" % "3.0.3" % Test,
+      "org.scalatest" %% "scalatest" % "3.0.4" % Test,
       compilerPlugin("org.scalamacros" % "paradise" % "2.1.0" % Test cross CrossVersion.full)
     )
   )
@@ -128,8 +137,8 @@ lazy val benchmark = project.in(file("benchmark"))
   .dependsOn(jackson25, jackson26, jackson27, jackson28)
 
 lazy val noPublishSettings = Seq(
-  publish := (),
-  publishLocal := (),
+  publish := {},
+  publishLocal := {},
   publishArtifact := false
 )
 

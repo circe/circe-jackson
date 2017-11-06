@@ -13,7 +13,7 @@ val compilerOptions = Seq(
   "-Xfuture"
 )
 
-val circeVersion = "0.9.0-M1"
+val circeVersion = "0.9.0-M2"
 val previousCirceJacksonVersion = "0.8.0"
 
 val baseSettings = Seq(
@@ -53,10 +53,11 @@ val baseSettings = Seq(
 
 val docMappingsApiDir = settingKey[String]("Subdirectory in site target directory for API docs")
 
-def jacksonDependencies(version: String) = Seq(
-  "com.fasterxml.jackson.core" % "jackson-core",
-  "com.fasterxml.jackson.core" % "jackson-databind"
-).map(_ % version)
+def jacksonDependencies(version: String, databindVersion: Option[String] = None) =
+  Seq(
+    "com.fasterxml.jackson.core" % "jackson-core" % version,
+    "com.fasterxml.jackson.core" % "jackson-databind" % databindVersion.getOrElse(version)
+  )
 
 val allSettings = baseSettings ++ publishSettings
 
@@ -77,7 +78,7 @@ lazy val jackson26 = project.in(file("26"))
   .settings(allSettings)
   .settings(
     moduleName := "circe-jackson26",
-    libraryDependencies ++= jacksonDependencies("2.6.7"),
+    libraryDependencies ++= jacksonDependencies("2.6.7", Some("2.6.7.1")),
     unmanagedSourceDirectories in Compile += (baseDirectory in ThisBuild).value / "27",
     mimaPreviousArtifacts := Set("io.circe" %% "circe-jackson26" % previousCirceJacksonVersion)
   )
@@ -86,7 +87,7 @@ lazy val jackson27 = project.in(file("27"))
   .settings(allSettings)
   .settings(
     moduleName := "circe-jackson27",
-    libraryDependencies ++= jacksonDependencies("2.7.9"),
+    libraryDependencies ++= jacksonDependencies("2.7.9", Some("2.7.9.1")),
     mimaPreviousArtifacts := Set("io.circe" %% "circe-jackson27" % previousCirceJacksonVersion)
   )
 

@@ -13,7 +13,7 @@ val compilerOptions = Seq(
   "-Xfuture"
 )
 
-val circeVersion = "0.9.0-M2"
+val circeVersion = "0.9.0-M3"
 val previousCirceJacksonVersion = "0.8.0"
 
 val baseSettings = Seq(
@@ -116,7 +116,7 @@ lazy val jackson29 = project.in(file("29"))
   .settings(allSettings)
   .settings(
     moduleName := "circe-jackson29",
-    libraryDependencies ++= jacksonDependencies("2.9.2"),
+    libraryDependencies ++= jacksonDependencies("2.9.3"),
     unmanagedSourceDirectories in Compile += (baseDirectory in ThisBuild).value / "28",
     mimaPreviousArtifacts := Set("io.circe" %% "circe-jackson29" % previousCirceJacksonVersion)
   )

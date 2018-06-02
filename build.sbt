@@ -13,8 +13,8 @@ val compilerOptions = Seq(
   "-Xfuture"
 )
 
-val circeVersion = "0.9.0"
-val previousCirceJacksonVersion = "0.8.0"
+val circeVersion = "0.9.3"
+val previousCirceJacksonVersion = "0.9.0"
 
 val baseSettings = Seq(
   scalacOptions ++= compilerOptions ++ (
@@ -87,7 +87,7 @@ lazy val jackson27 = project.in(file("27"))
   .settings(allSettings)
   .settings(
     moduleName := "circe-jackson27",
-    libraryDependencies ++= jacksonDependencies("2.7.9", Some("2.7.9.1")),
+    libraryDependencies ++= jacksonDependencies("2.7.9", Some("2.7.9.3")),
     mimaPreviousArtifacts := Set("io.circe" %% "circe-jackson27" % previousCirceJacksonVersion)
   )
 
@@ -96,7 +96,7 @@ lazy val jackson28 = project.in(file("28"))
   .settings(allSettings)
   .settings(
     moduleName := "circe-jackson28",
-    libraryDependencies ++= jacksonDependencies("2.8.10"),
+    libraryDependencies ++= jacksonDependencies("2.8.11", Some("2.8.11.1")),
     docMappingsApiDir := "api",
     addMappingsToSiteDir(mappings in (Compile, packageDoc), docMappingsApiDir),
     ghpagesNoJekyll := true,
@@ -116,7 +116,7 @@ lazy val jackson29 = project.in(file("29"))
   .settings(allSettings)
   .settings(
     moduleName := "circe-jackson29",
-    libraryDependencies ++= jacksonDependencies("2.9.3"),
+    libraryDependencies ++= jacksonDependencies("2.9.5"),
     unmanagedSourceDirectories in Compile += (baseDirectory in ThisBuild).value / "28",
     mimaPreviousArtifacts := Set("io.circe" %% "circe-jackson29" % previousCirceJacksonVersion)
   )
@@ -130,8 +130,8 @@ lazy val benchmark = project.in(file("benchmark"))
       "io.circe" %% "circe-generic" % circeVersion,
       "io.circe" %% "circe-jawn" % circeVersion,
       "io.circe" %% "circe-parser" % circeVersion % Test,
-      "org.scalatest" %% "scalatest" % "3.0.4" % Test,
-      compilerPlugin("org.scalamacros" % "paradise" % "2.1.0" % Test cross CrossVersion.full)
+      "org.scalatest" %% "scalatest" % "3.0.5" % Test,
+      compilerPlugin("org.scalamacros" % "paradise" % "2.1.1" % Test cross CrossVersion.full)
     )
   )
   .enablePlugins(JmhPlugin)

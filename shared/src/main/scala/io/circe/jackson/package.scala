@@ -1,12 +1,11 @@
 package io.circe
 
-import java.math.{BigDecimal => JBigDecimal}
-import java.io._
-import java.nio.ByteBuffer
-
-import scala.collection.JavaConverters._
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.node._
+import java.io._
+import java.math.{BigDecimal => JBigDecimal}
+import java.nio.ByteBuffer
+import scala.collection.JavaConverters._
 
 /**
  * Support for Jackson-powered parsing and printing for circe.

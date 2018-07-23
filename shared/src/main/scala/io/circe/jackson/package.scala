@@ -1,7 +1,12 @@
 package io.circe
 
-import java.io.{ BufferedWriter, ByteArrayOutputStream, OutputStreamWriter, StringWriter, Writer }
+import java.math.{BigDecimal => JBigDecimal}
+import java.io._
 import java.nio.ByteBuffer
+
+import scala.collection.JavaConverters._
+import com.fasterxml.jackson.databind.JsonNode
+import com.fasterxml.jackson.databind.node._
 
 /**
  * Support for Jackson-powered parsing and printing for circe.
@@ -37,4 +42,62 @@ package object jackson extends WithJacksonMapper with JacksonParser with Jackson
     writeJson(new BufferedWriter(new OutputStreamWriter(bytes, "UTF-8")), json)
     bytes.toByteBuffer
   }
+
+  private val negativeZeroJson: Json = Json.fromDoubleOrNull(-0.0)
+
+  /**
+    * Converts given circe's Json instance to Jackson's JsonNode
+    * Numbers with exponents exceeding Integer.MAX_VALUE are converted to strings
+    * '''Warning: This implementation is not stack safe and will fail on very deep structures'''
+    * @param json instance of circe's Json
+    * @return converted JsonNode
+    */
+  final def circeToJackson(json: Json): JsonNode = json.fold(
+    NullNode.instance,
+    BooleanNode.valueOf(_),
+    number => {
+      if (json == negativeZeroJson) {
+        DoubleNode.valueOf(number.toDouble)
+      } else number match {
+        case _: JsonBiggerDecimal | _: JsonBigDecimal =>
+          number.toBigDecimal.map(bigDecimal => DecimalNode.valueOf(bigDecimal.underlying))
+            .getOrElse(TextNode.valueOf(number.toString))
+        case JsonLong(x) => LongNode.valueOf(x)
+        case JsonDouble(x) => DoubleNode.valueOf(x)
+        case JsonFloat(x) => FloatNode.valueOf(x)
+        case JsonDecimal(x) => try {
+          DecimalNode.valueOf(new JBigDecimal(x))
+        } catch {
+          case nfe: NumberFormatException => TextNode.valueOf(x)
+        }
+      }
+    },
+    TextNode.valueOf(_),
+    array => JsonNodeFactory.instance.arrayNode.addAll(array.map(circeToJackson).asJava),
+    obj => JsonNodeFactory.instance.objectNode.setAll(obj.toMap.mapValues(circeToJackson).asJava)
+  )
+
+  /**
+    * Converts given Jackson's JsonNode to circe's Json
+    * This implementation tries to keep the original numbers formatting
+    * '''Warning: This implementation is not stack safe and will fail on very deep structures'''
+    * @param node instance of Jackson's JsonNode
+    * @return converted Json instance
+    */
+  final def jacksonToCirce(node: JsonNode): Json = node.getNodeType match {
+    case JsonNodeType.BOOLEAN => Json.fromBoolean(node.asBoolean)
+    case JsonNodeType.STRING => Json.fromString(node.asText)
+    case JsonNodeType.NUMBER =>
+      if (node.isFloatingPointNumber) {
+        Json.fromBigDecimal(new JBigDecimal(node.asText)) // workaround for rounding problems
+      } else {
+        Json.fromBigInt(node.bigIntegerValue)
+      }
+    case JsonNodeType.ARRAY =>
+      Json.fromValues(node.elements.asScala.map(jacksonToCirce).toIterable)
+    case JsonNodeType.OBJECT =>
+      Json.fromFields(node.fields.asScala.map(m => (m.getKey, jacksonToCirce(m.getValue))).toIterable)
+    case _ => Json.Null
+  }
+
 }

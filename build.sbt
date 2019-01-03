@@ -15,7 +15,7 @@ val compilerOptions = Seq(
 )
 
 val circeVersion = "0.11.0"
-val previousCirceJacksonVersion = "0.9.0"
+val previousCirceJacksonVersion = "0.10.0"
 
 val baseSettings = Seq(
   scalacOptions ++= compilerOptions,
@@ -30,7 +30,7 @@ val baseSettings = Seq(
     Resolver.sonatypeRepo("snapshots")
   ),
   coverageHighlighting := true,
-  coverageScalacPluginVersion := "1.3.0",
+  coverageScalacPluginVersion := "1.3.1",
   (scalastyleSources in Compile) ++= (unmanagedSourceDirectories in Compile).value,
   libraryDependencies ++= Seq(
     "io.circe" %% "circe-core" % circeVersion,
@@ -69,7 +69,7 @@ lazy val jackson26 = project.in(file("26"))
   .settings(allSettings)
   .settings(
     moduleName := "circe-jackson26",
-    libraryDependencies ++= jacksonDependencies("2.6.7", Some("2.6.7.1")),
+    libraryDependencies ++= jacksonDependencies("2.6.7", Some("2.6.7.2")),
     unmanagedSourceDirectories in Compile += (baseDirectory in ThisBuild).value / "27",
     mimaPreviousArtifacts := Set("io.circe" %% "circe-jackson26" % previousCirceJacksonVersion)
   )
@@ -78,7 +78,7 @@ lazy val jackson27 = project.in(file("27"))
   .settings(allSettings)
   .settings(
     moduleName := "circe-jackson27",
-    libraryDependencies ++= jacksonDependencies("2.7.9", Some("2.7.9.4")),
+    libraryDependencies ++= jacksonDependencies("2.7.9", Some("2.7.9.5")),
     mimaPreviousArtifacts := Set("io.circe" %% "circe-jackson27" % previousCirceJacksonVersion)
   )
 
@@ -87,7 +87,7 @@ lazy val jackson28 = project.in(file("28"))
   .settings(allSettings)
   .settings(
     moduleName := "circe-jackson28",
-    libraryDependencies ++= jacksonDependencies("2.8.11", Some("2.8.11.2")),
+    libraryDependencies ++= jacksonDependencies("2.8.11", Some("2.8.11.3")),
     docMappingsApiDir := "api",
     addMappingsToSiteDir(mappings in (Compile, packageDoc), docMappingsApiDir),
     ghpagesNoJekyll := true,
@@ -107,7 +107,7 @@ lazy val jackson29 = project.in(file("29"))
   .settings(allSettings)
   .settings(
     moduleName := "circe-jackson29",
-    libraryDependencies ++= jacksonDependencies("2.9.6"),
+    libraryDependencies ++= jacksonDependencies("2.9.8"),
     unmanagedSourceDirectories in Compile += (baseDirectory in ThisBuild).value / "28",
     mimaPreviousArtifacts := Set("io.circe" %% "circe-jackson29" % previousCirceJacksonVersion)
   )

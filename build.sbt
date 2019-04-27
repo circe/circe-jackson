@@ -126,6 +126,7 @@ lazy val jackson29 = project.in(file("29"))
   )
 
 lazy val benchmark = project.in(file("benchmark"))
+  .settings(allSettings)
   .settings(noPublishSettings)
   .settings(
     crossScalaVersions := crossScalaVersions.value.init,

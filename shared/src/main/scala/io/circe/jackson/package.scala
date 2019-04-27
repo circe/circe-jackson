@@ -73,7 +73,7 @@ package object jackson extends WithJacksonMapper with JacksonParser with Jackson
     },
     TextNode.valueOf(_),
     array => JsonNodeFactory.instance.arrayNode.addAll(array.map(circeToJackson).asJava),
-    obj => JsonNodeFactory.instance.objectNode.setAll(obj.toMap.mapValues(circeToJackson).asJava)
+    obj => JsonNodeFactory.instance.objectNode.setAll(obj.toMap.mapValues(circeToJackson).toMap.asJava)
   )
 
   /**

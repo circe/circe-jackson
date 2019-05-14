@@ -136,7 +136,7 @@ lazy val benchmark = project.in(file("benchmark"))
       "io.circe" %% "circe-jawn" % circeVersion,
       "io.circe" %% "circe-parser" % circeVersion % Test,
       "org.scalatest" %% "scalatest" % "3.1.0-SNAP10" % Test,
-      "org.scalatestplus" %% "scalatestplus-scalacheck" % "1.0.0-SNAP4" % Test
+      "org.scalatestplus" %% "scalatestplus-scalacheck" % "1.0.0-SNAP5" % Test
     )
   )
   .enablePlugins(JmhPlugin)

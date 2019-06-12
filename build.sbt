@@ -11,7 +11,7 @@ val compilerOptions = Seq(
   "-Ywarn-numeric-widen",
 )
 
-val circeVersion = "0.12.0-M1"
+val circeVersion = "0.12.0-M3"
 val previousCirceJacksonVersion = "0.11.0"
 
 def priorTo2_13(scalaVersion: String): Boolean =
@@ -120,7 +120,7 @@ lazy val jackson29 = project.in(file("29"))
   .settings(allSettings)
   .settings(
     moduleName := "circe-jackson29",
-    libraryDependencies ++= jacksonDependencies("2.9.8"),
+    libraryDependencies ++= jacksonDependencies("2.9.9"),
     unmanagedSourceDirectories in Compile += (baseDirectory in ThisBuild).value / "28",
     mimaPreviousArtifacts := Set("io.circe" %% "circe-jackson29" % previousCirceJacksonVersion)
   )
@@ -135,8 +135,8 @@ lazy val benchmark = project.in(file("benchmark"))
       "io.circe" %% "circe-generic" % circeVersion,
       "io.circe" %% "circe-jawn" % circeVersion,
       "io.circe" %% "circe-parser" % circeVersion % Test,
-      "org.scalatest" %% "scalatest" % "3.1.0-SNAP10" % Test,
-      "org.scalatestplus" %% "scalatestplus-scalacheck" % "1.0.0-SNAP4" % Test
+      "org.scalatest" %% "scalatest" % "3.1.0-SNAP13" % Test,
+      "org.scalatestplus" %% "scalatestplus-scalacheck" % "1.0.0-SNAP8" % Test
     )
   )
   .enablePlugins(JmhPlugin)

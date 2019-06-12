@@ -52,11 +52,14 @@ val baseSettings = Seq(
   libraryDependencies ++= Seq(
     "io.circe" %% "circe-core" % circeVersion,
     "io.circe" %% "circe-jawn" % circeVersion % Test,
-    "io.circe" %% "circe-testing" % circeVersion % Test
+    "io.circe" %% "circe-testing" % circeVersion % Test,
+    "org.scalatest" %% "scalatest" % "3.1.0-SNAP13" % Test,
+    "org.scalatestplus" %% "scalatestplus-scalacheck" % "1.0.0-SNAP8" % Test
   ),
   unmanagedSourceDirectories in Compile += (baseDirectory in ThisBuild).value / "shared/src/main",
   unmanagedSourceDirectories in Test += (baseDirectory in ThisBuild).value / "shared/src/test",
-  unmanagedResourceDirectories in Test += (baseDirectory in ThisBuild).value / "shared/src/test/resources"
+  unmanagedResourceDirectories in Test += (baseDirectory in ThisBuild).value / "shared/src/test/resources",
+  Test / classLoaderLayeringStrategy := ClassLoaderLayeringStrategy.RuntimeDependencies
 )
 
 val docMappingsApiDir = settingKey[String]("Subdirectory in site target directory for API docs")
@@ -147,9 +150,7 @@ lazy val benchmark = project
       "io.circe" %% "circe-core" % circeVersion,
       "io.circe" %% "circe-generic" % circeVersion,
       "io.circe" %% "circe-jawn" % circeVersion,
-      "io.circe" %% "circe-parser" % circeVersion % Test,
-      "org.scalatest" %% "scalatest" % "3.1.0-SNAP13" % Test,
-      "org.scalatestplus" %% "scalatestplus-scalacheck" % "1.0.0-SNAP8" % Test
+      "io.circe" %% "circe-parser" % circeVersion % Test
     )
   )
   .enablePlugins(JmhPlugin)

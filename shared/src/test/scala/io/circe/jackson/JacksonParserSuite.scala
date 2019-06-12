@@ -1,19 +1,19 @@
 package io.circe.jackson
 
-
 import cats.data.Validated
 import com.fasterxml.jackson.core.JsonToken
-import com.fasterxml.jackson.databind.{ObjectMapper, ObjectReader}
+import com.fasterxml.jackson.databind.{ ObjectMapper, ObjectReader }
 import io.circe.Json
 import io.circe.testing.ParserTests
-import java.io.{ByteArrayInputStream, File}
+import java.io.{ ByteArrayInputStream, File }
 
 import scala.io.Source
 
 class JacksonParserSuite extends CirceSuite with JacksonInstances {
   checkLaws("Parser", ParserTests(`package`).fromString(arbitraryCleanedJson, shrinkJson))
-  checkLaws("Parser", ParserTests(`package`)
-    .fromFunction[Array[Byte]]("fromByteArray")(
+  checkLaws(
+    "Parser",
+    ParserTests(`package`).fromFunction[Array[Byte]]("fromByteArray")(
       s => s.getBytes("UTF-8"),
       p => p.parseByteArray _,
       p => p.decodeByteArray[Json] _,

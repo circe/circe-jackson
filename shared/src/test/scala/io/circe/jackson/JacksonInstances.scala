@@ -3,16 +3,7 @@ package io.circe.jackson
 import cats.Eq
 import cats.instances.list._
 import cats.instances.map._
-import io.circe.{
-  Json,
-  JsonBigDecimal,
-  JsonBiggerDecimal,
-  JsonDecimal,
-  JsonDouble,
-  JsonFloat,
-  JsonLong,
-  JsonNumber
-}
+import io.circe.{ Json, JsonBigDecimal, JsonBiggerDecimal, JsonDecimal, JsonDouble, JsonFloat, JsonLong, JsonNumber }
 import io.circe.Json.{ JArray, JNumber, JObject, JString }
 import io.circe.numbers.BiggerDecimal
 import io.circe.testing.ArbitraryInstances
@@ -22,16 +13,17 @@ import scala.util.Try
 import java.nio.ByteBuffer
 
 trait JacksonInstances { this: ArbitraryInstances =>
+
   /**
    * Jackson by default in some cases serializes numbers as strings, and we want
    * to use a [[cats.Eq]] instance that takes that into account when testing.
    */
   implicit val eqJsonStringNumber: Eq[Json] = Eq.instance {
-    case ( JArray(a),  JArray(b)) => Eq[List[Json]].eqv(a.toList, b.toList)
+    case (JArray(a), JArray(b))   => Eq[List[Json]].eqv(a.toList, b.toList)
     case (JObject(a), JObject(b)) => Eq[Map[String, Json]].eqv(a.toMap, b.toMap)
     case (JString(a), JNumber(b)) => a == b.toString
     case (JNumber(a), JString(b)) => a.toString == b
-    case (a, b) => Json.eqJson.eqv(a, b)
+    case (a, b)                   => Json.eqJson.eqv(a, b)
   }
 
   implicit val eqByteBuffer: Eq[ByteBuffer] = Eq.fromUniversalEquals
@@ -48,19 +40,21 @@ trait JacksonInstances { this: ArbitraryInstances =>
    */
   def cleanNumber(n: JsonNumber): JsonNumber = n.toString match {
     case SigExpPattern(exp) if !Try(exp.toLong).toOption.exists(_ <= Short.MaxValue.toLong) => replacement
-    case _ => n match {
-      case v @ JsonDecimal(_) => cleanNumber(JsonBiggerDecimal(v.toBiggerDecimal))
-      case v @ JsonBiggerDecimal(value) =>
-        value.toBigDecimal.map(BigDecimal(_)).fold(replacement) { d =>
-          val fromBigDecimal = BiggerDecimal.fromBigDecimal(d.bigDecimal)
+    case _ =>
+      n match {
+        case v @ JsonDecimal(_) => cleanNumber(JsonBiggerDecimal(v.toBiggerDecimal))
+        case v @ JsonBiggerDecimal(value) =>
+          value.toBigDecimal.map(BigDecimal(_)).fold(replacement) { d =>
+            val fromBigDecimal = BiggerDecimal.fromBigDecimal(d.bigDecimal)
 
-          if (fromBigDecimal == value && d.abs <= BigDecimal(Double.MaxValue)) v else JsonBiggerDecimal(fromBigDecimal)
-        }
-      case v @ JsonBigDecimal(_) => v
-      case v @ JsonDouble(_) => v
-      case v @ JsonFloat(_) => v
-      case v @ JsonLong(_) => v
-    }
+            if (fromBigDecimal == value && d.abs <= BigDecimal(Double.MaxValue)) v
+            else JsonBiggerDecimal(fromBigDecimal)
+          }
+        case v @ JsonBigDecimal(_) => v
+        case v @ JsonDouble(_)     => v
+        case v @ JsonFloat(_)      => v
+        case v @ JsonLong(_)       => v
+      }
   }
 
   def cleanNumbers(json: Json): Json =

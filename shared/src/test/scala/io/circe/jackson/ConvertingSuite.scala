@@ -2,7 +2,6 @@ package io.circe.jackson
 
 import org.scalatest.Matchers
 
-
 class ConvertingSuite extends CirceSuite with Matchers with JacksonInstances {
 
   "circeToJackson" should "correctly convert arbitrary cleaned json" in {

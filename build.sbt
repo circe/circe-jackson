@@ -2,13 +2,14 @@ organization in ThisBuild := "io.circe"
 
 val compilerOptions = Seq(
   "-deprecation",
-  "-encoding", "UTF-8",
+  "-encoding",
+  "UTF-8",
   "-feature",
   "-language:existentials",
   "-language:higherKinds",
   "-unchecked",
   "-Ywarn-dead-code",
-  "-Ywarn-numeric-widen",
+  "-Ywarn-numeric-widen"
 )
 
 val circeVersion = "0.12.0-M3"
@@ -23,13 +24,16 @@ def priorTo2_13(scalaVersion: String): Boolean =
 val baseSettings = Seq(
   scalacOptions ++= compilerOptions,
   scalacOptions ++= (
-    if (priorTo2_13(scalaVersion.value)) Seq(
-      "-Xfuture",
-      "-Yno-adapted-args",
-      "-Ywarn-unused-import"
-    ) else Seq(
-      "-Ywarn-unused:imports"
-    )
+    if (priorTo2_13(scalaVersion.value))
+      Seq(
+        "-Xfuture",
+        "-Yno-adapted-args",
+        "-Ywarn-unused-import"
+      )
+    else
+      Seq(
+        "-Ywarn-unused:imports"
+      )
   ),
   scalacOptions in (Compile, console) ~= {
     _.filterNot(Set("-Ywarn-unused-import"))
@@ -65,12 +69,14 @@ def jacksonDependencies(version: String, databindVersion: Option[String] = None)
 
 val allSettings = baseSettings ++ publishSettings
 
-val root = project.in(file("."))
+val root = project
+  .in(file("."))
   .settings(allSettings ++ noPublishSettings)
   .aggregate(jackson25, jackson26, jackson27, jackson28, jackson29, benchmark)
   .dependsOn(jackson28)
 
-lazy val jackson25 = project.in(file("25"))
+lazy val jackson25 = project
+  .in(file("25"))
   .settings(allSettings)
   .settings(
     moduleName := "circe-jackson25",
@@ -78,7 +84,8 @@ lazy val jackson25 = project.in(file("25"))
     mimaPreviousArtifacts := Set("io.circe" %% "circe-jackson25" % previousCirceJacksonVersion)
   )
 
-lazy val jackson26 = project.in(file("26"))
+lazy val jackson26 = project
+  .in(file("26"))
   .settings(allSettings)
   .settings(
     moduleName := "circe-jackson26",
@@ -87,7 +94,8 @@ lazy val jackson26 = project.in(file("26"))
     mimaPreviousArtifacts := Set("io.circe" %% "circe-jackson26" % previousCirceJacksonVersion)
   )
 
-lazy val jackson27 = project.in(file("27"))
+lazy val jackson27 = project
+  .in(file("27"))
   .settings(allSettings)
   .settings(
     moduleName := "circe-jackson27",
@@ -95,7 +103,8 @@ lazy val jackson27 = project.in(file("27"))
     mimaPreviousArtifacts := Set("io.circe" %% "circe-jackson27" % previousCirceJacksonVersion)
   )
 
-lazy val jackson28 = project.in(file("28"))
+lazy val jackson28 = project
+  .in(file("28"))
   .enablePlugins(GhpagesPlugin)
   .settings(allSettings)
   .settings(
@@ -107,8 +116,10 @@ lazy val jackson28 = project.in(file("28"))
     scalacOptions in (Compile, doc) ++= Seq(
       "-groups",
       "-implicits",
-      "-doc-source-url", scmInfo.value.get.browseUrl + "/tree/master€{FILE_PATH}.scala",
-      "-sourcepath", baseDirectory.in(LocalRootProject).value.getAbsolutePath
+      "-doc-source-url",
+      scmInfo.value.get.browseUrl + "/tree/master€{FILE_PATH}.scala",
+      "-sourcepath",
+      baseDirectory.in(LocalRootProject).value.getAbsolutePath
     ),
     git.remoteRepo := "git@github.com:circe/circe-jackson.git",
     autoAPIMappings := true,
@@ -116,7 +127,8 @@ lazy val jackson28 = project.in(file("28"))
     mimaPreviousArtifacts := Set("io.circe" %% "circe-jackson28" % previousCirceJacksonVersion)
   )
 
-lazy val jackson29 = project.in(file("29"))
+lazy val jackson29 = project
+  .in(file("29"))
   .settings(allSettings)
   .settings(
     moduleName := "circe-jackson29",
@@ -125,7 +137,8 @@ lazy val jackson29 = project.in(file("29"))
     mimaPreviousArtifacts := Set("io.circe" %% "circe-jackson29" % previousCirceJacksonVersion)
   )
 
-lazy val benchmark = project.in(file("benchmark"))
+lazy val benchmark = project
+  .in(file("benchmark"))
   .settings(allSettings)
   .settings(noPublishSettings)
   .settings(
@@ -155,13 +168,15 @@ lazy val publishSettings = Seq(
   licenses := Seq("Apache 2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0")),
   publishMavenStyle := true,
   publishArtifact in Test := false,
-  pomIncludeRepository := { _ => false },
+  pomIncludeRepository := { _ =>
+    false
+  },
   publishTo := {
     val nexus = "https://oss.sonatype.org/"
     if (isSnapshot.value)
       Some("snapshots" at nexus + "content/repositories/snapshots")
     else
-      Some("releases"  at nexus + "service/local/staging/deploy/maven2")
+      Some("releases" at nexus + "service/local/staging/deploy/maven2")
   },
   scmInfo := Some(
     ScmInfo(

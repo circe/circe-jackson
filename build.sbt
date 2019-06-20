@@ -59,7 +59,7 @@ val baseSettings = Seq(
   unmanagedSourceDirectories in Compile += (baseDirectory in ThisBuild).value / "shared/src/main",
   unmanagedSourceDirectories in Test += (baseDirectory in ThisBuild).value / "shared/src/test",
   unmanagedResourceDirectories in Test += (baseDirectory in ThisBuild).value / "shared/src/test/resources",
-  Test / classLoaderLayeringStrategy := ClassLoaderLayeringStrategy.RuntimeDependencies
+  Test / classLoaderLayeringStrategy := ClassLoaderLayeringStrategy.AllLibraryJars
 )
 
 val docMappingsApiDir = settingKey[String]("Subdirectory in site target directory for API docs")

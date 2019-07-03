@@ -12,7 +12,7 @@ val compilerOptions = Seq(
   "-Ywarn-numeric-widen"
 )
 
-val circeVersion = "0.12.0-M3"
+val circeVersion = "0.12.0-M4"
 val previousCirceJacksonVersion = "0.11.0"
 
 def priorTo2_13(scalaVersion: String): Boolean =
@@ -133,7 +133,7 @@ lazy val jackson29 = project
   .settings(allSettings)
   .settings(
     moduleName := "circe-jackson29",
-    libraryDependencies ++= jacksonDependencies("2.9.9"),
+    libraryDependencies ++= jacksonDependencies("2.9.9", Some("2.9.9.1")),
     unmanagedSourceDirectories in Compile += (baseDirectory in ThisBuild).value / "28",
     mimaPreviousArtifacts := Set("io.circe" %% "circe-jackson29" % previousCirceJacksonVersion)
   )

@@ -3,7 +3,7 @@
 [![Build status](https://img.shields.io/travis/circe/circe-jackson/master.svg)](https://travis-ci.org/circe/circe-jackson)
 [![Coverage status](https://img.shields.io/codecov/c/github/circe/circe-jackson/master.svg)](https://codecov.io/github/circe/circe-jackson)
 [![Gitter](https://img.shields.io/badge/gitter-join%20chat-green.svg)](https://gitter.im/circe/circe)
-[![Maven Central](https://img.shields.io/maven-central/v/io.circe/circe-jackson28_2.11.svg)](https://maven-badges.herokuapp.com/maven-central/io.circe/circe-jackson28_2.11)
+[![Maven Central](https://img.shields.io/maven-central/v/io.circe/circe-jackson28_2.13.svg)](https://maven-badges.herokuapp.com/maven-central/io.circe/circe-jackson28_2.13)
 
 This project provides support for using [Jackson][jackson] for JSON parsing and printing with
 [circe][circe], a Scala library for encoding and decoding JSON to Scala types.

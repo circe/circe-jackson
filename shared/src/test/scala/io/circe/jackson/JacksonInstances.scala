@@ -29,7 +29,7 @@ trait JacksonInstances { this: ArbitraryInstances =>
   implicit val eqByteBuffer: Eq[ByteBuffer] = Eq.fromUniversalEquals
 
   private[this] val SigExpPattern: Regex = """[^eE]+[eE][+-]?(\d+)""".r
-  private[this] val replacement: JsonNumber = JsonBiggerDecimal(BiggerDecimal.fromLong(0L))
+  private[this] val replacement: JsonNumber = JsonBiggerDecimal(BiggerDecimal.fromLong(0L), "0")
 
   /**
    * Jackson can't handle some very large numbers, so we replace them.
@@ -42,13 +42,13 @@ trait JacksonInstances { this: ArbitraryInstances =>
     case SigExpPattern(exp) if !Try(exp.toLong).toOption.exists(_ <= Short.MaxValue.toLong) => replacement
     case _ =>
       n match {
-        case v @ JsonDecimal(_) => cleanNumber(JsonBiggerDecimal(v.toBiggerDecimal))
-        case v @ JsonBiggerDecimal(value) =>
+        case v @ JsonDecimal(_) => cleanNumber(JsonBiggerDecimal(v.toBiggerDecimal, v.toString))
+        case v @ JsonBiggerDecimal(value, _) =>
           value.toBigDecimal.map(BigDecimal(_)).fold(replacement) { d =>
             val fromBigDecimal = BiggerDecimal.fromBigDecimal(d.bigDecimal)
 
             if (fromBigDecimal == value && d.abs <= BigDecimal(Double.MaxValue)) v
-            else JsonBiggerDecimal(fromBigDecimal)
+            else JsonBiggerDecimal(fromBigDecimal, fromBigDecimal.toString)
           }
         case v @ JsonBigDecimal(_) => v
         case v @ JsonDouble(_)     => v

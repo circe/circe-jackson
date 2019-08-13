@@ -15,12 +15,12 @@ private[jackson] final object CirceJsonSerializer extends JsonSerializer[Json] {
   ): Unit = value match {
     case Json.JNumber(v) =>
       v match {
-        case JsonLong(x)          => json.writeNumber(x)
-        case JsonDouble(x)        => json.writeNumber(x)
-        case JsonFloat(x)         => json.writeNumber(x)
-        case JsonDecimal(x)       => json.writeString(x)
-        case JsonBiggerDecimal(x) => json.writeString(x.toString)
-        case JsonBigDecimal(x)    =>
+        case JsonLong(x)             => json.writeNumber(x)
+        case JsonDouble(x)           => json.writeNumber(x)
+        case JsonFloat(x)            => json.writeNumber(x)
+        case JsonDecimal(x)          => json.writeString(x)
+        case JsonBiggerDecimal(_, x) => json.writeString(x)
+        case JsonBigDecimal(x)       =>
           // Workaround #3784: Same behaviour as if JsonGenerator were
           // configured with WRITE_BIGDECIMAL_AS_PLAIN, but forced as this
           // configuration is ignored when called from ObjectMapper.valueToTree

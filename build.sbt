@@ -51,7 +51,7 @@ val baseSettings = Seq(
     "io.circe" %% "circe-core" % circeVersion,
     "io.circe" %% "circe-jawn" % circeVersion % Test,
     "io.circe" %% "circe-testing" % circeVersion % Test,
-    "org.scalatest" %% "scalatest" % "3.1.0-SNAP13" % Test,
+    "org.scalatest" %% "scalatest" % "3.1.0-RC3" % Test,
     "org.scalatestplus" %% "scalatestplus-scalacheck" % "3.1.0.0-RC2" % Test
   ),
   unmanagedSourceDirectories in Compile += (baseDirectory in ThisBuild).value / "shared/src/main",

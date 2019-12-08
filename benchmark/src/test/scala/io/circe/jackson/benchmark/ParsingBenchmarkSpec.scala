@@ -1,8 +1,8 @@
 package io.circe.jackson.benchmark
 
-import org.scalatest.FlatSpec
+import org.scalatest.flatspec.AnyFlatSpec
 
-class ParsingBenchmarkSpec extends FlatSpec {
+class ParsingBenchmarkSpec extends AnyFlatSpec {
   val benchmark: ParsingBenchmark = new ParsingBenchmark
 
   import benchmark._

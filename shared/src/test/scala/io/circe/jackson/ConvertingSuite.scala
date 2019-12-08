@@ -1,6 +1,6 @@
 package io.circe.jackson
 
-import org.scalatest.Matchers
+import org.scalatest.matchers.should.Matchers
 
 class ConvertingSuite extends CirceSuite with Matchers with JacksonInstances {
 

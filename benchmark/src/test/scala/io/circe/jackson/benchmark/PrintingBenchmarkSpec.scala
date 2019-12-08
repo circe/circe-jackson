@@ -1,10 +1,10 @@
 package io.circe.jackson.benchmark
 
 import io.circe.parser.decode
-import org.scalatest.FlatSpec
 import java.nio.ByteBuffer
+import org.scalatest.flatspec.AnyFlatSpec
 
-class PrintingBenchmarkSpec extends FlatSpec {
+class PrintingBenchmarkSpec extends AnyFlatSpec {
   val benchmark: PrintingBenchmark = new PrintingBenchmark
 
   import benchmark._

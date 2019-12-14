@@ -73,8 +73,8 @@ val allSettings = baseSettings ++ publishSettings
 val root = project
   .in(file("."))
   .settings(allSettings ++ noPublishSettings)
-  .aggregate(jackson25, jackson26, jackson27, jackson28, jackson29, benchmark)
-  .dependsOn(jackson28)
+  .aggregate(jackson25, jackson26, jackson27, jackson28, jackson29, jackson210, benchmark)
+  .dependsOn(jackson210)
 
 lazy val jackson25 = project
   .in(file("25"))
@@ -138,6 +138,15 @@ lazy val jackson29 = project
     mimaPreviousArtifacts := Set("io.circe" %% "circe-jackson29" % previousCirceJacksonVersion)
   )
 
+lazy val jackson210 = project
+  .in(file("210"))
+  .settings(allSettings)
+  .settings(
+    moduleName := "circe-jackson210",
+    libraryDependencies ++= jacksonDependencies("2.10.1"),
+    unmanagedSourceDirectories in Compile += (baseDirectory in ThisBuild).value / "210"
+  )
+
 lazy val benchmark = project
   .in(file("benchmark"))
   .settings(allSettings)
@@ -152,7 +161,7 @@ lazy val benchmark = project
     )
   )
   .enablePlugins(JmhPlugin)
-  .dependsOn(jackson25, jackson26, jackson27, jackson28)
+  .dependsOn(jackson210)
 
 lazy val noPublishSettings = Seq(
   publish := {},

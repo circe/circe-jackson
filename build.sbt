@@ -13,7 +13,7 @@ val compilerOptions = Seq(
 )
 
 val circeVersion = "0.12.3"
-val previousCirceJacksonVersion = "0.11.0"
+val previousCirceJacksonVersion = "0.12.0"
 
 def priorTo2_13(scalaVersion: String): Boolean =
   CrossVersion.partialVersion(scalaVersion) match {

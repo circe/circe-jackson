@@ -12,7 +12,9 @@ private[jackson] trait JacksonCompat {
     parser: JsonParser
   ): Unit =
     throw context.mappingException(klass)
+}
 
-  protected def objectNodeSetAll(node: ObjectNode, fields: java.util.Map[String, JsonNode]): JsonNode =
+private[jackson] object JacksonCompat {
+  def objectNodeSetAll(node: ObjectNode, fields: java.util.Map[String, JsonNode]): JsonNode =
     node.setAll(fields)
 }

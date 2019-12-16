@@ -54,7 +54,7 @@ package object jackson extends WithJacksonMapper with JacksonParser with Jackson
   final def circeToJackson(json: Json): JsonNode = json.fold(
     NullNode.instance,
     BooleanNode.valueOf(_),
-    number => {
+    number =>
       if (json == negativeZeroJson) {
         DoubleNode.valueOf(number.toDouble)
       } else number match {
@@ -69,11 +69,10 @@ package object jackson extends WithJacksonMapper with JacksonParser with Jackson
         } catch {
           case nfe: NumberFormatException => TextNode.valueOf(x)
         }
-      }
-    },
+      },
     TextNode.valueOf(_),
     array => JsonNodeFactory.instance.arrayNode.addAll(array.map(circeToJackson).asJava),
-    obj => JsonNodeFactory.instance.objectNode.setAll(obj.toMap.mapValues(circeToJackson).asJava)
+    obj => objectNodeSetAll(JsonNodeFactory.instance.objectNode, obj.toMap.mapValues(circeToJackson).asJava)
   )
 
   /**

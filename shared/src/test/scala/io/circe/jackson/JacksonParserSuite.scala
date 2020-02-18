@@ -10,8 +10,8 @@ import java.io.{ ByteArrayInputStream, File }
 import scala.io.Source
 
 class JacksonParserSuite extends CirceSuite with JacksonInstances {
-  checkLaws("Parser", ParserTests(`package`).fromString(arbitraryCleanedJson, shrinkJson))
-  checkLaws(
+  checkAll("Parser", ParserTests(`package`).fromString(arbitraryCleanedJson, shrinkJson))
+  checkAll(
     "Parser",
     ParserTests(`package`).fromFunction[Array[Byte]]("fromByteArray")(
       s => s.getBytes("UTF-8"),

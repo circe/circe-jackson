@@ -33,9 +33,7 @@ private[jackson] final object CirceJsonSerializer extends JsonSerializer[Json] {
     case Json.JBoolean(v) => json.writeBoolean(v)
     case Json.JArray(elements) => {
       json.writeStartArray()
-      elements.foreach { t =>
-        serialize(t, json, provider)
-      }
+      elements.foreach(t => serialize(t, json, provider))
       json.writeEndArray()
     }
     case Json.JObject(values) => {

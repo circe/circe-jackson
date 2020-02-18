@@ -9,7 +9,6 @@ class JacksonPrintingSuite extends CirceSuite with JacksonInstances {
   }
 
   "jacksonPrintByteBuffer" should "produce the same output as jacksonPrint" in forAll(arbitraryCleanedJson.arbitrary) {
-    (json: Json) =>
-      assert(jacksonPrintByteBuffer(json) === ByteBuffer.wrap(jacksonPrint(json).getBytes("UTF-8")))
+    (json: Json) => assert(jacksonPrintByteBuffer(json) === ByteBuffer.wrap(jacksonPrint(json).getBytes("UTF-8")))
   }
 }

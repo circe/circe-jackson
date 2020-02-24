@@ -52,7 +52,7 @@ val baseSettings = Seq(
     "io.circe" %% "circe-jawn" % circeVersion % Test,
     "io.circe" %% "circe-testing" % circeVersion % Test,
     "org.scalatest" %% "scalatest" % "3.1.1" % Test,
-    "org.scalatestplus" %% "scalacheck-1-14" % "3.1.1.0" % Test,
+    "org.scalatestplus" %% "scalacheck-1-14" % "3.1.1.1" % Test,
     "org.typelevel" %% "discipline-scalatest" % "1.0.1" % Test
   ),
   unmanagedSourceDirectories in Compile += (baseDirectory in ThisBuild).value / "shared/src/main",
@@ -134,7 +134,7 @@ lazy val jackson29 = project
   .settings(allSettings)
   .settings(
     moduleName := "circe-jackson29",
-    libraryDependencies ++= jacksonDependencies("2.9.10", Some("2.9.10.2")),
+    libraryDependencies ++= jacksonDependencies("2.9.10", Some("2.9.10.3")),
     unmanagedSourceDirectories in Compile += (baseDirectory in ThisBuild).value / "28",
     mimaPreviousArtifacts := Set("io.circe" %% "circe-jackson29" % previousCirceJacksonVersion)
   )

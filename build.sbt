@@ -134,7 +134,7 @@ lazy val jackson29 = project
   .settings(allSettings)
   .settings(
     moduleName := "circe-jackson29",
-    libraryDependencies ++= jacksonDependencies("2.9.10", Some("2.9.10.3")),
+    libraryDependencies ++= jacksonDependencies("2.9.10", Some("2.9.10.4")),
     unmanagedSourceDirectories in Compile += (baseDirectory in ThisBuild).value / "28",
     mimaPreviousArtifacts := Set("io.circe" %% "circe-jackson29" % previousCirceJacksonVersion)
   )

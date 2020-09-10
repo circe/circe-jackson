@@ -47,24 +47,24 @@ class JacksonParserSuite extends CirceSuite with JacksonInstances {
   for (elementCount <- 1 to 4) {
     "CirceJsonDeserializer" should s"be useable with Jackson's MappingIterator " +
       s"with ${elementCount} elements in array" in {
-      val input = new ByteArrayInputStream(createJsonArrayAsBytes(glossaryAsBytes, elementCount))
-      val objectMapper = new ObjectMapper()
-      objectMapper.registerModule(CirceJsonModule)
-      val jsonParser = objectMapper.getFactory.createParser(input)
+        val input = new ByteArrayInputStream(createJsonArrayAsBytes(glossaryAsBytes, elementCount))
+        val objectMapper = new ObjectMapper()
+        objectMapper.registerModule(CirceJsonModule)
+        val jsonParser = objectMapper.getFactory.createParser(input)
 
-      assert(jsonParser.nextToken() == JsonToken.START_ARRAY)
-      assert(jsonParser.nextToken() == JsonToken.START_OBJECT)
+        assert(jsonParser.nextToken() == JsonToken.START_ARRAY)
+        assert(jsonParser.nextToken() == JsonToken.START_OBJECT)
 
-      val reader = createReader(objectMapper).forType(classOf[Json])
-      val iterator = reader.readValues[Json](jsonParser)
-      var counter = 0
-      while (iterator.hasNext) {
-        val glossaryFromIterator = iterator.next()
-        assert(glossary == glossaryFromIterator)
-        counter = counter + 1
+        val reader = createReader(objectMapper).forType(classOf[Json])
+        val iterator = reader.readValues[Json](jsonParser)
+        var counter = 0
+        while (iterator.hasNext) {
+          val glossaryFromIterator = iterator.next()
+          assert(glossary == glossaryFromIterator)
+          counter = counter + 1
+        }
+        assert(counter == elementCount)
       }
-      assert(counter == elementCount)
-    }
   }
 
   // workaround warnings from compiler with Jackson 2.5

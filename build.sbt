@@ -13,7 +13,9 @@ val compilerOptions = Seq(
 )
 
 val circeVersion = "0.13.0"
+val munitVersion = "0.7.19"
 val previousCirceJacksonVersion = "0.12.0"
+val disciplineMunitVersion = "1.0.3"
 
 def priorTo2_13(scalaVersion: String): Boolean =
   CrossVersion.partialVersion(scalaVersion) match {
@@ -51,13 +53,12 @@ val baseSettings = Seq(
     "io.circe" %% "circe-core" % circeVersion,
     "io.circe" %% "circe-jawn" % circeVersion % Test,
     "io.circe" %% "circe-testing" % circeVersion % Test,
-    "org.scalatest" %% "scalatest" % "3.2.3" % Test,
-    "org.scalatestplus" %% "scalacheck-1-14" % "3.2.2.0" % Test,
-    "org.typelevel" %% "discipline-scalatest" % "2.0.1" % Test
+    "org.typelevel" %% "discipline-munit" % disciplineMunitVersion
   ),
   unmanagedSourceDirectories in Compile += (baseDirectory in ThisBuild).value / "shared/src/main",
   unmanagedSourceDirectories in Test += (baseDirectory in ThisBuild).value / "shared/src/test",
   unmanagedResourceDirectories in Test += (baseDirectory in ThisBuild).value / "shared/src/test/resources",
+  testFrameworks += new TestFramework("munit.Framework"),
   Test / classLoaderLayeringStrategy := ClassLoaderLayeringStrategy.AllLibraryJars
 )
 

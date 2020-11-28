@@ -1,22 +1,21 @@
 package io.circe.jackson
 
-import org.scalatest.matchers.should.Matchers
+import org.scalacheck.Prop
 
-class ConvertingSuite extends CirceSuite with Matchers with JacksonInstances {
+class ConvertingSuite extends CirceSuite with JacksonInstances {
 
-  "circeToJackson" should "correctly convert arbitrary cleaned json" in {
-    forAll(arbitraryCleanedJson.arbitrary) { json =>
+  property("circeToJackson should correctly convert arbitrary cleaned json") {
+    Prop.forAll(arbitraryCleanedJson.arbitrary) { json =>
       val node = circeToJackson(json)
-      parse(node.toString) shouldEqual Right(json)
+      assert(parse(node.toString) === Right(json))
     }
   }
 
-  "jacksonToCirce" should "correctly convert arbitrary cleaned json" in {
-    forAll(arbitraryCleanedJson.arbitrary) { json =>
+  property("jacksonToCirce should correctly convert arbitrary cleaned json") {
+    Prop.forAll(arbitraryCleanedJson.arbitrary) { json =>
       val node = circeToJackson(json)
       val convertedJson = jacksonToCirce(node)
-
-      convertedJson shouldEqual json
+      assert(convertedJson === json)
     }
   }
 

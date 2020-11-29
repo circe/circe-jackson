@@ -1,10 +1,17 @@
 package io.circe.jackson.benchmark
 
+import cats.instances.AllInstances
+import io.circe.testing.{ ArbitraryInstances, EqInstances }
+import cats.syntax.{ AllSyntax }
 import io.circe.parser.decode
 import java.nio.ByteBuffer
-import org.scalatest.flatspec.AnyFlatSpec
 
-class PrintingBenchmarkSpec extends AnyFlatSpec {
+class PrintingBenchmarkSpec
+    extends munit.FunSuite
+    with AllInstances
+    with AllSyntax
+    with ArbitraryInstances
+    with EqInstances {
   val benchmark: PrintingBenchmark = new PrintingBenchmark
 
   import benchmark._
@@ -21,12 +28,12 @@ class PrintingBenchmarkSpec extends AnyFlatSpec {
   private[this] def decodeFoos(json: String): Option[Map[String, Foo]] =
     decode[Map[String, Foo]](json).fold(_ => None, Some(_))
 
-  it should "correctly print integers using Circe with Jackson" in {
+  test("correctly print integers using Circe with Jackson") {
     assert(decodeInts(printIntsCJString) === Some(ints))
     assert(decodeInts(byteBufferToString(printIntsCJBytes)) === Some(ints))
   }
 
-  it should "correctly print case classes using Circe with Jackson" in {
+  test("correctly print case classes using Circe with Jackson") {
     assert(decodeFoos(printFoosCJString) === Some(foos))
     assert(decodeFoos(byteBufferToString(printFoosCJBytes)) === Some(foos))
   }

@@ -6,10 +6,12 @@ import com.fasterxml.jackson.databind.{ ObjectMapper, ObjectReader }
 import io.circe.Json
 import io.circe.testing.ParserTests
 import java.io.{ ByteArrayInputStream, File }
-
+import org.scalacheck.Prop
 import scala.io.Source
+import munit.DisciplineSuite
 
-class JacksonParserSuite extends CirceSuite with JacksonInstances {
+class JacksonParserSuite extends CirceSuite with DisciplineSuite with JacksonInstances {
+
   checkAll("Parser", ParserTests(`package`).fromString(arbitraryCleanedJson, shrinkJson))
   checkAll(
     "Parser",
@@ -21,13 +23,15 @@ class JacksonParserSuite extends CirceSuite with JacksonInstances {
     )(arbitraryCleanedJson, shrinkJson)
   )
 
-  "parse and decode(Accumulating)" should "fail on invalid input" in forAll { (s: String) =>
-    assert(parse(s"Not JSON $s").isLeft)
-    assert(decode[Json](s"Not JSON $s").isLeft)
-    assert(decodeAccumulating[Json](s"Not JSON $s").isInvalid)
+  property("parse and decode(Accumulating) should fail on invalid input") {
+    Prop.forAll { (s: String) =>
+      assert(parse(s"Not JSON $s").isLeft)
+      assert(decode[Json](s"Not JSON $s").isLeft)
+      assert(decodeAccumulating[Json](s"Not JSON $s").isInvalid)
+    }
   }
 
-  "parseFile and decodeFile(Accumulating)" should "parse a JSON file" in {
+  test("parseFile and decodeFile(Accumulating) should parse a JSON file") {
     val url = getClass.getResource("/io/circe/jackson/examples/glossary.json")
     val file = new File(url.toURI)
 
@@ -36,7 +40,7 @@ class JacksonParserSuite extends CirceSuite with JacksonInstances {
     assert(parseFile(file) === Right(glossary))
   }
 
-  "parseByteArray and decodeByteArray(Accumulating)" should "parse an array of elementAsBytes" in {
+  test("parseByteArray and decodeByteArray(Accumulating) should parse an array of elementAsBytes") {
     val bytes = glossaryAsBytes
 
     assert(decodeByteArray[Json](bytes) === Right(glossary))
@@ -44,27 +48,27 @@ class JacksonParserSuite extends CirceSuite with JacksonInstances {
     assert(parseByteArray(bytes) === Right(glossary))
   }
 
+  private val intro = "CirceJsonDeserializer should be useable with Jackson's MappingIterator "
   for (elementCount <- 1 to 4) {
-    "CirceJsonDeserializer" should s"be useable with Jackson's MappingIterator " +
-      s"with ${elementCount} elements in array" in {
-        val input = new ByteArrayInputStream(createJsonArrayAsBytes(glossaryAsBytes, elementCount))
-        val objectMapper = new ObjectMapper()
-        objectMapper.registerModule(CirceJsonModule)
-        val jsonParser = objectMapper.getFactory.createParser(input)
+    test(s"$intro with ${elementCount} elements in array") {
+      val input = new ByteArrayInputStream(createJsonArrayAsBytes(glossaryAsBytes, elementCount))
+      val objectMapper = new ObjectMapper()
+      objectMapper.registerModule(CirceJsonModule)
+      val jsonParser = objectMapper.getFactory.createParser(input)
 
-        assert(jsonParser.nextToken() == JsonToken.START_ARRAY)
-        assert(jsonParser.nextToken() == JsonToken.START_OBJECT)
+      assert(jsonParser.nextToken() == JsonToken.START_ARRAY)
+      assert(jsonParser.nextToken() == JsonToken.START_OBJECT)
 
-        val reader = createReader(objectMapper).forType(classOf[Json])
-        val iterator = reader.readValues[Json](jsonParser)
-        var counter = 0
-        while (iterator.hasNext) {
-          val glossaryFromIterator = iterator.next()
-          assert(glossary == glossaryFromIterator)
-          counter = counter + 1
-        }
-        assert(counter == elementCount)
+      val reader = createReader(objectMapper).forType(classOf[Json])
+      val iterator = reader.readValues[Json](jsonParser)
+      var counter = 0
+      while (iterator.hasNext) {
+        val glossaryFromIterator = iterator.next()
+        assert(glossary == glossaryFromIterator)
+        counter = counter + 1
       }
+      assert(counter == elementCount)
+    }
   }
 
   // workaround warnings from compiler with Jackson 2.5

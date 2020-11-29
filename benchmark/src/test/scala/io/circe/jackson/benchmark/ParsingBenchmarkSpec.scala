@@ -1,25 +1,32 @@
 package io.circe.jackson.benchmark
 
-import org.scalatest.flatspec.AnyFlatSpec
+import cats.instances.AllInstances
+import io.circe.testing.{ ArbitraryInstances, EqInstances }
+import cats.syntax.{ AllSyntax }
 
-class ParsingBenchmarkSpec extends AnyFlatSpec {
+class ParsingBenchmarkSpec
+    extends munit.FunSuite
+    with AllInstances
+    with AllSyntax
+    with ArbitraryInstances
+    with EqInstances {
   val benchmark: ParsingBenchmark = new ParsingBenchmark
 
   import benchmark._
 
-  "The parsing benchmark" should "correctly parse integers using Circe" in {
+  test("The parsing benchmark should correctly parse integers using Circe") {
     assert(parseIntsC === intsC)
   }
 
-  it should "correctly parse integers using Circe with Jackson" in {
+  test("correctly parse integers using Circe with Jackson") {
     assert(parseIntsCJ === intsC)
   }
 
-  it should "correctly parse case classes using Circe" in {
+  test("it should correctly parse case classes using Circe") {
     assert(parseFoosC === foosC)
   }
 
-  it should "correctly parse case classes using Circe with Jackson" in {
+  test("it should correctly parse case classes using Circe with Jackson") {
     assert(parseFoosCJ === foosC)
   }
 }

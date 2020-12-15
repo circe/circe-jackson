@@ -149,6 +149,24 @@ lazy val jackson210 = project
     unmanagedSourceDirectories in Compile += (baseDirectory in ThisBuild).value / "210"
   )
 
+lazy val jackson211 = project
+  .in(file("211"))
+  .settings(allSettings)
+  .settings(
+    moduleName := "circe-jackson211",
+    libraryDependencies ++= jacksonDependencies("2.11.4"),
+    unmanagedSourceDirectories in Compile += (baseDirectory in ThisBuild).value / "210"
+  )
+
+lazy val jackson212 = project
+  .in(file("212"))
+  .settings(allSettings)
+  .settings(
+    moduleName := "circe-jackson212",
+    libraryDependencies ++= jacksonDependencies("2.12.0"),
+    unmanagedSourceDirectories in Compile += (baseDirectory in ThisBuild).value / "210"
+  )
+
 lazy val benchmark = project
   .in(file("benchmark"))
   .settings(allSettings)

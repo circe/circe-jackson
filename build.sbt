@@ -13,9 +13,9 @@ val compilerOptions = Seq(
 )
 
 val circeVersion = "0.14.1"
-val munitVersion = "0.7.19"
-val previousCirceJacksonVersion = "0.12.0"
-val disciplineMunitVersion = "1.0.7"
+val munitVersion = "0.7.26"
+val previousCirceJacksonVersion = "0.13.0"
+val disciplineMunitVersion = "1.0.9"
 
 def priorTo2_13(scalaVersion: String): Boolean =
   CrossVersion.partialVersion(scalaVersion) match {
@@ -163,7 +163,7 @@ lazy val jackson212 = project
   .settings(allSettings)
   .settings(
     moduleName := "circe-jackson212",
-    libraryDependencies ++= jacksonDependencies("2.12.2"),
+    libraryDependencies ++= jacksonDependencies("2.12.3"),
     unmanagedSourceDirectories in Compile += (baseDirectory in ThisBuild).value / "210"
   )
 
@@ -181,7 +181,7 @@ lazy val benchmark = project
     )
   )
   .enablePlugins(JmhPlugin)
-  .dependsOn(jackson210)
+  .dependsOn(jackson212)
 
 lazy val noPublishSettings = Seq(
   publish := {},

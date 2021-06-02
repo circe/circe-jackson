@@ -1,4 +1,4 @@
-organization in ThisBuild := "io.circe"
+ThisBuild / organization := "io.circe"
 ThisBuild / crossScalaVersions := Seq("2.13.6", "2.12.14")
 ThisBuild / scalaVersion := crossScalaVersions.value.head
 ThisBuild / githubWorkflowPublishTargetBranches := Nil
@@ -40,10 +40,10 @@ val baseSettings = Seq(
         "-Ywarn-unused:imports"
       )
   ),
-  scalacOptions in (Compile, console) ~= {
+  Compile / console / scalacOptions ~= {
     _.filterNot(Set("-Ywarn-unused-import"))
   },
-  scalacOptions in (Test, console) ~= {
+  Test / console / scalacOptions ~= {
     _.filterNot(Set("-Ywarn-unused-import"))
   },
   resolvers ++= Seq(
@@ -51,16 +51,16 @@ val baseSettings = Seq(
     Resolver.sonatypeRepo("snapshots")
   ),
   coverageHighlighting := true,
-  (scalastyleSources in Compile) ++= (unmanagedSourceDirectories in Compile).value,
+  (Compile / scalastyleSources) ++= (Compile / unmanagedSourceDirectories).value,
   libraryDependencies ++= Seq(
     "io.circe" %% "circe-core" % circeVersion,
     "io.circe" %% "circe-jawn" % circeVersion % Test,
     "io.circe" %% "circe-testing" % circeVersion % Test,
     "org.typelevel" %% "discipline-munit" % disciplineMunitVersion
   ),
-  unmanagedSourceDirectories in Compile += (baseDirectory in ThisBuild).value / "shared/src/main",
-  unmanagedSourceDirectories in Test += (baseDirectory in ThisBuild).value / "shared/src/test",
-  unmanagedResourceDirectories in Test += (baseDirectory in ThisBuild).value / "shared/src/test/resources",
+  Compile / unmanagedSourceDirectories += (ThisBuild / baseDirectory).value / "shared/src/main",
+  Test / unmanagedSourceDirectories += (ThisBuild / baseDirectory).value / "shared/src/test",
+  Test / unmanagedResourceDirectories += (ThisBuild / baseDirectory).value / "shared/src/test/resources",
   testFrameworks += new TestFramework("munit.Framework"),
   Test / classLoaderLayeringStrategy := ClassLoaderLayeringStrategy.AllLibraryJars
 )
@@ -96,7 +96,7 @@ lazy val jackson26 = project
   .settings(
     moduleName := "circe-jackson26",
     libraryDependencies ++= jacksonDependencies("2.6.7", Some("2.6.7.4")),
-    unmanagedSourceDirectories in Compile += (baseDirectory in ThisBuild).value / "27",
+    Compile / unmanagedSourceDirectories += (ThisBuild / baseDirectory).value / "27",
     mimaPreviousArtifacts := Set("io.circe" %% "circe-jackson26" % previousCirceJacksonVersion)
   )
 
@@ -117,15 +117,15 @@ lazy val jackson28 = project
     moduleName := "circe-jackson28",
     libraryDependencies ++= jacksonDependencies("2.8.11", Some("2.8.11.6")),
     docMappingsApiDir := "api",
-    addMappingsToSiteDir(mappings in (Compile, packageDoc), docMappingsApiDir),
+    addMappingsToSiteDir(Compile / packageDoc / mappings, docMappingsApiDir),
     ghpagesNoJekyll := true,
-    scalacOptions in (Compile, doc) ++= Seq(
+    Compile / doc / scalacOptions ++= Seq(
       "-groups",
       "-implicits",
       "-doc-source-url",
       scmInfo.value.get.browseUrl + "/tree/master€{FILE_PATH}.scala",
       "-sourcepath",
-      baseDirectory.in(LocalRootProject).value.getAbsolutePath
+      (LocalRootProject / baseDirectory).value.getAbsolutePath
     ),
     git.remoteRepo := "git@github.com:circe/circe-jackson.git",
     autoAPIMappings := true,
@@ -139,7 +139,7 @@ lazy val jackson29 = project
   .settings(
     moduleName := "circe-jackson29",
     libraryDependencies ++= jacksonDependencies("2.9.10", Some("2.9.10.8")),
-    unmanagedSourceDirectories in Compile += (baseDirectory in ThisBuild).value / "28",
+    Compile / unmanagedSourceDirectories += (ThisBuild / baseDirectory).value / "28",
     mimaPreviousArtifacts := Set("io.circe" %% "circe-jackson29" % previousCirceJacksonVersion)
   )
 
@@ -149,7 +149,7 @@ lazy val jackson210 = project
   .settings(
     moduleName := "circe-jackson210",
     libraryDependencies ++= jacksonDependencies("2.10.5"),
-    unmanagedSourceDirectories in Compile += (baseDirectory in ThisBuild).value / "210"
+    Compile / unmanagedSourceDirectories += (ThisBuild / baseDirectory).value / "210"
   )
 
 lazy val jackson211 = project
@@ -158,7 +158,7 @@ lazy val jackson211 = project
   .settings(
     moduleName := "circe-jackson211",
     libraryDependencies ++= jacksonDependencies("2.11.4"),
-    unmanagedSourceDirectories in Compile += (baseDirectory in ThisBuild).value / "210"
+    Compile / unmanagedSourceDirectories += (ThisBuild / baseDirectory).value / "210"
   )
 
 lazy val jackson212 = project
@@ -167,7 +167,7 @@ lazy val jackson212 = project
   .settings(
     moduleName := "circe-jackson212",
     libraryDependencies ++= jacksonDependencies("2.12.3"),
-    unmanagedSourceDirectories in Compile += (baseDirectory in ThisBuild).value / "210"
+    Compile / unmanagedSourceDirectories += (ThisBuild / baseDirectory).value / "210"
   )
 
 lazy val benchmark = project
@@ -199,7 +199,7 @@ lazy val publishSettings = Seq(
   homepage := Some(url("https://github.com/circe/circe-jackson")),
   licenses := Seq("Apache 2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0")),
   publishMavenStyle := true,
-  publishArtifact in Test := false,
+  Test / publishArtifact := false,
   pomIncludeRepository := { _ => false },
   publishTo := {
     val nexus = "https://oss.sonatype.org/"

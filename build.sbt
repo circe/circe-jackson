@@ -1,4 +1,7 @@
 organization in ThisBuild := "io.circe"
+ThisBuild / crossScalaVersions := Seq("2.13.6", "2.12.14")
+ThisBuild / scalaVersion := crossScalaVersions.value.head
+ThisBuild / githubWorkflowPublishTargetBranches := Nil
 
 val compilerOptions = Seq(
   "-deprecation",

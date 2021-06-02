@@ -1,5 +1,5 @@
 ThisBuild / organization := "io.circe"
-ThisBuild / crossScalaVersions := Seq("2.13.6", "2.12.14")
+ThisBuild / crossScalaVersions := Seq("2.13.6", "2.12.14", "3.0.0")
 ThisBuild / scalaVersion := crossScalaVersions.value.head
 ThisBuild / githubWorkflowPublishTargetBranches := Nil
 
@@ -51,6 +51,7 @@ val baseSettings = Seq(
     Resolver.sonatypeRepo("snapshots")
   ),
   coverageHighlighting := true,
+  coverageEnabled := (if (scalaVersion.value.startsWith("3")) false else coverageEnabled.value),
   (Compile / scalastyleSources) ++= (Compile / unmanagedSourceDirectories).value,
   libraryDependencies ++= Seq(
     "io.circe" %% "circe-core" % circeVersion,
@@ -175,7 +176,6 @@ lazy val benchmark = project
   .settings(allSettings)
   .settings(noPublishSettings)
   .settings(
-    crossScalaVersions := crossScalaVersions.value.init,
     libraryDependencies ++= Seq(
       "io.circe" %% "circe-core" % circeVersion,
       "io.circe" %% "circe-generic" % circeVersion,

@@ -1,6 +1,6 @@
 # circe-jackson
 
-[![Build status](https://img.shields.io/travis/circe/circe-jackson/master.svg)](https://travis-ci.org/circe/circe-jackson)
+[![Build status](https://img.shields.io/github/workflow/status/circe/circe-jackson/Continuous%20Integration.svg)](https://github.com/circe/circe-jackson/actions)
 [![Coverage status](https://img.shields.io/codecov/c/github/circe/circe-jackson/master.svg)](https://codecov.io/github/circe/circe-jackson)
 [![Gitter](https://img.shields.io/badge/gitter-join%20chat-green.svg)](https://gitter.im/circe/circe)
 [![Maven Central](https://img.shields.io/maven-central/v/io.circe/circe-jackson28_2.13.svg)](https://maven-badges.herokuapp.com/maven-central/io.circe/circe-jackson28_2.13)

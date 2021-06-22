@@ -96,7 +96,7 @@ lazy val jackson26 = project
   .settings(allSettings)
   .settings(
     moduleName := "circe-jackson26",
-    libraryDependencies ++= jacksonDependencies("2.6.7", Some("2.6.7.4")),
+    libraryDependencies ++= jacksonDependencies("2.6.7", Some("2.6.7.5")),
     Compile / unmanagedSourceDirectories += (ThisBuild / baseDirectory).value / "27",
     mimaPreviousArtifacts := Set("io.circe" %% "circe-jackson26" % previousCirceJacksonVersion)
   )

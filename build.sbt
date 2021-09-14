@@ -1,5 +1,5 @@
 ThisBuild / organization := "io.circe"
-ThisBuild / crossScalaVersions := Seq("2.13.6", "2.12.14", "3.0.2")
+ThisBuild / crossScalaVersions := Seq("2.13.6", "2.12.15", "3.0.2")
 ThisBuild / scalaVersion := crossScalaVersions.value.head
 ThisBuild / githubWorkflowPublishTargetBranches := Nil
 

@@ -167,7 +167,7 @@ lazy val jackson212 = project
   .settings(allSettings)
   .settings(
     moduleName := "circe-jackson212",
-    libraryDependencies ++= jacksonDependencies("2.12.5"),
+    libraryDependencies ++= jacksonDependencies("2.12.7.1"),
     Compile / unmanagedSourceDirectories += (ThisBuild / baseDirectory).value / "210"
   )
 

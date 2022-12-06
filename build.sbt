@@ -79,7 +79,7 @@ val allSettings = baseSettings ++ publishSettings
 val root = project
   .in(file("."))
   .settings(allSettings ++ noPublishSettings)
-  .aggregate(jackson25, jackson26, jackson27, jackson28, jackson29, jackson210, jackson211, jackson212, jackson213, benchmark)
+  .aggregate(jackson25, jackson26, jackson27, jackson28, jackson29, jackson210, jackson211, jackson212, jackson213, jackson214, benchmark)
   .dependsOn(jackson210)
 
 lazy val jackson25 = project
@@ -177,6 +177,15 @@ lazy val jackson213 = project
   .settings(
     moduleName := "circe-jackson213",
     libraryDependencies ++= jacksonDependencies("2.13.0"),
+    Compile / unmanagedSourceDirectories += (ThisBuild / baseDirectory).value / "210"
+  )
+
+lazy val jackson214 = project
+  .in(file("214"))
+  .settings(allSettings)
+  .settings(
+    moduleName := "circe-jackson214",
+    libraryDependencies ++= jacksonDependencies("2.14.1"),
     Compile / unmanagedSourceDirectories += (ThisBuild / baseDirectory).value / "210"
   )
 

@@ -57,7 +57,7 @@ val baseSettings = Seq(
     "io.circe" %% "circe-core" % circeVersion,
     "io.circe" %% "circe-jawn" % circeVersion % Test,
     "io.circe" %% "circe-testing" % circeVersion % Test,
-    "org.typelevel" %% "discipline-munit" % disciplineMunitVersion
+    "org.typelevel" %% "discipline-munit" % disciplineMunitVersion % Test
   ),
   Compile / unmanagedSourceDirectories += (ThisBuild / baseDirectory).value / "shared/src/main",
   Test / unmanagedSourceDirectories += (ThisBuild / baseDirectory).value / "shared/src/test",

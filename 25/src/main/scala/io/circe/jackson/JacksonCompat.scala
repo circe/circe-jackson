@@ -15,4 +15,7 @@ private[jackson] trait JacksonCompat {
 
   protected def objectNodeSetAll(node: ObjectNode, fields: java.util.Map[String, JsonNode]): JsonNode =
     node.setAll(fields)
+
+  protected def currentName(jp: JsonParser): String = jp.getCurrentName
+
 }

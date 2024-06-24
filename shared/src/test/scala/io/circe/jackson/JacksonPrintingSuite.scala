@@ -17,8 +17,9 @@
 package io.circe.jackson
 
 import io.circe.Json
-import java.nio.ByteBuffer
 import org.scalacheck.Prop.forAll
+
+import java.nio.ByteBuffer
 
 class JacksonPrintingSuite extends CirceSuite with JacksonInstances {
   property("jacksonPrint should produce round-trippable output") {

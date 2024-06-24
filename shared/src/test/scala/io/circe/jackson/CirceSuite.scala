@@ -17,11 +17,12 @@
 package io.circe.jackson
 
 import cats.instances.AllInstances
-import cats.syntax.{ AllSyntax, EitherOps }
+import cats.syntax.AllSyntax
+import cats.syntax.EitherOps
 import io.circe.Json
-import io.circe.testing.{ ArbitraryInstances, EqInstances }
+import io.circe.testing.ArbitraryInstances
+import io.circe.testing.EqInstances
 import munit.ScalaCheckSuite
-import scala.language.implicitConversions
 
 /**
  * An opinionated stack of traits to improve consistency and reduce boilerplate in circe tests.

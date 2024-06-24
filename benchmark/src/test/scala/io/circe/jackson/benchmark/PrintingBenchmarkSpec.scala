@@ -17,9 +17,11 @@
 package io.circe.jackson.benchmark
 
 import cats.instances.AllInstances
-import io.circe.testing.{ ArbitraryInstances, EqInstances }
 import cats.syntax.AllSyntax
 import io.circe.parser.decode
+import io.circe.testing.ArbitraryInstances
+import io.circe.testing.EqInstances
+
 import java.nio.ByteBuffer
 
 class PrintingBenchmarkSpec

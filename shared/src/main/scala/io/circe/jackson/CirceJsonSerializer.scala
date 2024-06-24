@@ -17,10 +17,17 @@
 package io.circe.jackson
 
 import com.fasterxml.jackson.core.JsonGenerator
-import com.fasterxml.jackson.databind.{ JsonSerializer, SerializerProvider }
-import io.circe.{ Json, JsonBigDecimal, JsonBiggerDecimal, JsonDecimal, JsonDouble, JsonFloat, JsonLong }
+import com.fasterxml.jackson.databind.JsonSerializer
+import com.fasterxml.jackson.databind.SerializerProvider
+import io.circe.Json
+import io.circe.JsonBigDecimal
+import io.circe.JsonBiggerDecimal
+import io.circe.JsonDecimal
+import io.circe.JsonDouble
+import io.circe.JsonFloat
+import io.circe.JsonLong
 
-private[jackson] final object CirceJsonSerializer extends JsonSerializer[Json] {
+private[jackson] object CirceJsonSerializer extends JsonSerializer[Json] {
   import java.math.{ BigDecimal => JBigDecimal, BigInteger }
   import com.fasterxml.jackson.databind.node.{ BigIntegerNode, DecimalNode }
 

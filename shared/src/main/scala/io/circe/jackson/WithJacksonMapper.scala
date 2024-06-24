@@ -16,9 +16,12 @@
 
 package io.circe.jackson
 
-import com.fasterxml.jackson.core.{ JsonFactory, JsonParser }
+import com.fasterxml.jackson.core.JsonFactory
+import com.fasterxml.jackson.core.JsonParser
 import com.fasterxml.jackson.databind.ObjectMapper
-import java.io.{ File, Writer }
+
+import java.io.File
+import java.io.Writer
 
 class WithJacksonMapper {
   final val mapper: ObjectMapper = (new ObjectMapper).registerModule(CirceJsonModule)

@@ -18,13 +18,16 @@ package io.circe.jackson
 
 import cats.data.Validated
 import com.fasterxml.jackson.core.JsonToken
-import com.fasterxml.jackson.databind.{ ObjectMapper, ObjectReader }
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.ObjectReader
 import io.circe.Json
 import io.circe.testing.ParserTests
-import java.io.{ ByteArrayInputStream, File }
-import org.scalacheck.Prop
-import scala.io.Source
 import munit.DisciplineSuite
+import org.scalacheck.Prop
+
+import java.io.ByteArrayInputStream
+import java.io.File
+import scala.io.Source
 
 class JacksonParserSuite extends CirceSuite with DisciplineSuite with JacksonInstances {
 

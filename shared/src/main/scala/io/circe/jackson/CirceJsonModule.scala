@@ -17,20 +17,18 @@
 package io.circe.jackson
 
 import com.fasterxml.jackson.core.Version
-import com.fasterxml.jackson.databind.{
-  BeanDescription,
-  DeserializationConfig,
-  JavaType,
-  JsonSerializer,
-  SerializationConfig
-}
+import com.fasterxml.jackson.databind.BeanDescription
+import com.fasterxml.jackson.databind.DeserializationConfig
+import com.fasterxml.jackson.databind.JavaType
+import com.fasterxml.jackson.databind.JsonSerializer
 import com.fasterxml.jackson.databind.Module.SetupContext
+import com.fasterxml.jackson.databind.SerializationConfig
 import com.fasterxml.jackson.databind.deser.Deserializers
 import com.fasterxml.jackson.databind.module.SimpleModule
 import com.fasterxml.jackson.databind.ser.Serializers
 import io.circe.Json
 
-final object CirceJsonModule extends SimpleModule("CirceJson", Version.unknownVersion()) {
+object CirceJsonModule extends SimpleModule("CirceJson", Version.unknownVersion()) {
   override final def setupModule(context: SetupContext): Unit = {
     context.addDeserializers(
       new Deserializers.Base {

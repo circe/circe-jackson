@@ -17,8 +17,9 @@
 package io.circe.jackson.benchmark
 
 import cats.instances.AllInstances
-import io.circe.testing.{ ArbitraryInstances, EqInstances }
 import cats.syntax.AllSyntax
+import io.circe.testing.ArbitraryInstances
+import io.circe.testing.EqInstances
 
 class ParsingBenchmarkSpec
     extends munit.FunSuite

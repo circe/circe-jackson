@@ -17,12 +17,16 @@
 package io.circe.jackson.benchmark
 
 import cats.Eq
-import io.circe.{ Decoder, Encoder, Json => JsonC }
+import io.circe.Decoder
+import io.circe.Encoder
 import io.circe.generic.semiauto._
 import io.circe.jawn._
+import io.circe.{ Json => JsonC }
+import org.openjdk.jmh.annotations._
+
 import java.nio.ByteBuffer
 import java.util.concurrent.TimeUnit
-import org.openjdk.jmh.annotations._
+import scala.annotation.nowarn
 
 case class Foo(s: String, d: Double, i: Int, l: Long, bs: List[Boolean])
 
@@ -62,15 +66,19 @@ class ExampleData {
 @OutputTimeUnit(TimeUnit.SECONDS)
 class ParsingBenchmark extends ExampleData {
   @Benchmark
+  @nowarn("cat=deprecation")
   def parseIntsC: JsonC = parse(intsJson).right.getOrElse(throw new Exception)
 
   @Benchmark
+  @nowarn("cat=deprecation")
   def parseIntsCJ: JsonC = io.circe.jackson.parse(intsJson).right.getOrElse(throw new Exception)
 
   @Benchmark
+  @nowarn("cat=deprecation")
   def parseFoosC: JsonC = parse(foosJson).right.getOrElse(throw new Exception)
 
   @Benchmark
+  @nowarn("cat=deprecation")
   def parseFoosCJ: JsonC = io.circe.jackson.parse(foosJson).right.getOrElse(throw new Exception)
 }
 

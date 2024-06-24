@@ -19,14 +19,26 @@ package io.circe.jackson
 import cats.Eq
 import cats.instances.list._
 import cats.instances.map._
-import io.circe.{ Json, JsonBigDecimal, JsonBiggerDecimal, JsonDecimal, JsonDouble, JsonFloat, JsonLong, JsonNumber }
-import io.circe.Json.{ JArray, JNumber, JObject, JString }
+import io.circe.Json
+import io.circe.Json.JArray
+import io.circe.Json.JNumber
+import io.circe.Json.JObject
+import io.circe.Json.JString
+import io.circe.JsonBigDecimal
+import io.circe.JsonBiggerDecimal
+import io.circe.JsonDecimal
+import io.circe.JsonDouble
+import io.circe.JsonFloat
+import io.circe.JsonLong
+import io.circe.JsonNumber
 import io.circe.numbers.BiggerDecimal
-import io.circe.testing.ArbitraryInstances
 import org.scalacheck.Arbitrary
-import scala.util.matching.Regex
-import scala.util.Try
+
 import java.nio.ByteBuffer
+import scala.util.Try
+
+import io.circe.testing.ArbitraryInstances
+import scala.util.matching.Regex
 
 trait JacksonInstances { this: ArbitraryInstances =>
 

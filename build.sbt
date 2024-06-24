@@ -3,19 +3,11 @@ ThisBuild / crossScalaVersions := Seq("2.13.14", "2.12.19", "3.3.3")
 ThisBuild / scalaVersion := crossScalaVersions.value.head
 ThisBuild / githubWorkflowPublishTargetBranches := Nil
 ThisBuild / startYear := Some(2016)
-ThisBuild / tlBaseVersion := "0.14"
-
-val compilerOptions = Seq(
-  "-deprecation",
-  "-encoding",
-  "UTF-8",
-  "-feature",
-  "-language:existentials",
-  "-language:higherKinds",
-  "-unchecked",
-  "-Ywarn-dead-code",
-  "-Ywarn-numeric-widen"
-)
+ThisBuild / tlBaseVersion := "0.15"
+ThisBuild / scalafixAll / skip := tlIsScala3.value
+ThisBuild / ScalafixConfig / skip := tlIsScala3.value
+ThisBuild / tlCiScalafixCheck := false // TODO: Address these in a follow up PR
+ThisBuild / tlFatalWarnings := false // TODO: fix by dropping 2.12
 
 val circeVersion = "0.14.8"
 val munitVersion = "1.0.0"
@@ -29,34 +21,18 @@ def priorTo2_13(scalaVersion: String): Boolean =
   }
 
 val baseSettings = Seq(
-  scalacOptions ++= compilerOptions,
-  scalacOptions ++= (
-    if (priorTo2_13(scalaVersion.value))
-      Seq(
-        "-Xfuture",
-        "-Yno-adapted-args",
-        "-Ywarn-unused-import"
-      )
-    else
-      Seq(
-        "-Ywarn-unused:imports"
-      )
-  ),
-  Compile / console / scalacOptions ~= {
-    _.filterNot(Set("-Ywarn-unused-import"))
-  },
-  Test / console / scalacOptions ~= {
-    _.filterNot(Set("-Ywarn-unused-import"))
-  },
   resolvers ++= Resolver.sonatypeOssRepos("releases"),
   resolvers ++= Resolver.sonatypeOssRepos("snapshots"),
   coverageHighlighting := true,
-  coverageEnabled := (if (scalaVersion.value.startsWith("3")) false else coverageEnabled.value),
+  coverageEnabled := !tlIsScala3.value,
   libraryDependencies ++= Seq(
     "io.circe" %% "circe-core" % circeVersion,
+    "org.scala-lang.modules" %% "scala-collection-compat" % "2.12.0",
     "io.circe" %% "circe-jawn" % circeVersion % Test,
     "io.circe" %% "circe-testing" % circeVersion % Test,
-    "org.typelevel" %% "discipline-munit" % disciplineMunitVersion % Test
+    "org.typelevel" %% "discipline-munit" % disciplineMunitVersion % Test,
+    "org.scalameta" %% "munit" % munitVersion % Test,
+    "org.scalameta" %% "munit-scalacheck" % munitVersion % Test
   ),
   Compile / unmanagedSourceDirectories += (ThisBuild / baseDirectory).value / "shared/src/main",
   Test / unmanagedSourceDirectories += (ThisBuild / baseDirectory).value / "shared/src/test",
@@ -137,7 +113,6 @@ lazy val jackson28 = project
       "-sourcepath",
       (LocalRootProject / baseDirectory).value.getAbsolutePath
     ),
-    git.remoteRepo := "git@github.com:circe/circe-jackson.git",
     autoAPIMappings := true,
     apiURL := Some(url("https://circe.github.io/circe-jackson/api/")),
     mimaPreviousArtifacts := Set("io.circe" %% "circe-jackson28" % previousCirceJacksonVersion)

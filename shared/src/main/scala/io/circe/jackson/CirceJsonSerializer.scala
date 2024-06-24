@@ -26,7 +26,7 @@ private[jackson] final object CirceJsonSerializer extends JsonSerializer[Json] {
           // configuration is ignored when called from ObjectMapper.valueToTree
           val raw = x.stripTrailingZeros.toPlainString
 
-          if (raw contains ".") json.writeTree(new DecimalNode(new JBigDecimal(raw)))
+          if (raw.contains(".")) json.writeTree(new DecimalNode(new JBigDecimal(raw)))
           else json.writeTree(new BigIntegerNode(new BigInteger(raw)))
       }
     case Json.JString(v)  => json.writeString(v)

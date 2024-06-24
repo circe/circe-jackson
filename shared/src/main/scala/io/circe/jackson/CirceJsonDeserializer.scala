@@ -72,7 +72,7 @@ private[jackson] final class CirceJsonDeserializer(factory: TypeFactory, klass: 
       case JsonTokenId.ID_FIELD_NAME =>
         parserContext match {
           case (c: ReadingMap) :: stack => (None, c.setField(jp.getCurrentName) +: stack)
-          case _                        => throw new RuntimeException("We weren't reading an object, something went wrong")
+          case _ => throw new RuntimeException("We weren't reading an object, something went wrong")
         }
 
       case JsonTokenId.ID_END_OBJECT =>

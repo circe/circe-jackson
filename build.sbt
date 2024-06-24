@@ -5,7 +5,6 @@ ThisBuild / githubWorkflowPublishTargetBranches := Nil
 ThisBuild / startYear := Some(2016)
 ThisBuild / tlBaseVersion := "0.14"
 
-
 val compilerOptions = Seq(
   "-deprecation",
   "-encoding",
@@ -78,7 +77,22 @@ val allSettings = baseSettings ++ publishSettings
 val root = project
   .in(file("."))
   .settings(allSettings ++ noPublishSettings)
-  .aggregate(jackson25, jackson26, jackson27, jackson28, jackson29, jackson210, jackson211, jackson212, jackson213, benchmark)
+  .aggregate(
+    jackson26,
+    jackson26,
+    jackson27,
+    jackson28,
+    jackson29,
+    jackson210,
+    jackson211,
+    jackson212,
+    jackson213,
+    jackson214,
+    jackson215,
+    jackson216,
+    jackson217,
+    benchmark
+  )
   .dependsOn(jackson210)
 
 lazy val jackson25 = project
@@ -245,4 +259,3 @@ lazy val publishSettings = Seq(
     )
   )
 )
-

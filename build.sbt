@@ -78,8 +78,7 @@ lazy val jackson25 = project
   .settings(allSettings)
   .settings(
     moduleName := "circe-jackson25",
-    libraryDependencies ++= jacksonDependencies("2.5.5"),
-    mimaPreviousArtifacts := Set("io.circe" %% "circe-jackson25" % previousCirceJacksonVersion)
+    libraryDependencies ++= jacksonDependencies("2.5.5")
   )
 
 lazy val jackson26 = project
@@ -88,8 +87,7 @@ lazy val jackson26 = project
   .settings(
     moduleName := "circe-jackson26",
     libraryDependencies ++= jacksonDependencies("2.6.7", Some("2.6.7.5")),
-    Compile / unmanagedSourceDirectories += (ThisBuild / baseDirectory).value / "27",
-    mimaPreviousArtifacts := Set("io.circe" %% "circe-jackson26" % previousCirceJacksonVersion)
+    Compile / unmanagedSourceDirectories += (ThisBuild / baseDirectory).value / "27"
   )
 
 lazy val jackson27 = project
@@ -97,8 +95,7 @@ lazy val jackson27 = project
   .settings(allSettings)
   .settings(
     moduleName := "circe-jackson27",
-    libraryDependencies ++= jacksonDependencies("2.7.9", Some("2.7.9.7")),
-    mimaPreviousArtifacts := Set("io.circe" %% "circe-jackson27" % previousCirceJacksonVersion)
+    libraryDependencies ++= jacksonDependencies("2.7.9", Some("2.7.9.7"))
   )
 
 lazy val jackson28 = project
@@ -116,8 +113,7 @@ lazy val jackson28 = project
       (LocalRootProject / baseDirectory).value.getAbsolutePath
     ),
     autoAPIMappings := true,
-    apiURL := Some(url("https://circe.github.io/circe-jackson/api/")),
-    mimaPreviousArtifacts := Set("io.circe" %% "circe-jackson28" % previousCirceJacksonVersion)
+    apiURL := Some(url("https://circe.github.io/circe-jackson/api/"))
   )
 
 lazy val jackson29 = project
@@ -126,8 +122,7 @@ lazy val jackson29 = project
   .settings(
     moduleName := "circe-jackson29",
     libraryDependencies ++= jacksonDependencies("2.9.10", Some("2.9.10.8")),
-    Compile / unmanagedSourceDirectories += (ThisBuild / baseDirectory).value / "28",
-    mimaPreviousArtifacts := Set("io.circe" %% "circe-jackson29" % previousCirceJacksonVersion)
+    Compile / unmanagedSourceDirectories += (ThisBuild / baseDirectory).value / "28"
   )
 
 lazy val jackson210 = project
@@ -228,11 +223,8 @@ lazy val publishSettings = Seq(
   Test / publishArtifact := false,
   pomIncludeRepository := { _ => false },
   developers := List(
-    Developer(
-      "travisbrown",
-      "Travis Brown",
-      "travisrobertbrown@gmail.com",
-      url("https://twitter.com/travisbrown")
-    )
+    tlGitHubDev("travisbrown", "Travis Brown"),
+    tlGitHubDev("zathross", "Darren Gibson"),
+    tlGitHubDev("hamnis", "Erlend Hamnaberg")
   )
 )

@@ -11,7 +11,7 @@ ThisBuild / ScalafixConfig / skip := tlIsScala3.value
 ThisBuild / tlCiScalafixCheck := false // TODO: Address these in a follow up PR
 ThisBuild / tlFatalWarnings := false // TODO: fix by dropping 2.12
 
-val circeVersion = "0.14.8"
+val circeVersion = "0.14.9"
 val munitVersion = "1.0.0"
 val previousCirceJacksonVersion = "0.14.0"
 val disciplineMunitVersion = "2.0.0"

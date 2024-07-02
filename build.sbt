@@ -1,3 +1,5 @@
+import com.typesafe.tools.mima.core._
+
 ThisBuild / organization := "io.circe"
 ThisBuild / crossScalaVersions := Seq("2.13.14", "2.12.19", "3.3.3")
 ThisBuild / scalaVersion := crossScalaVersions.value.head
@@ -48,7 +50,13 @@ def jacksonDependencies(version: String, databindVersion: Option[String] = None)
     "com.fasterxml.jackson.core" % "jackson-databind" % databindVersion.getOrElse(version)
   )
 
-val allSettings = baseSettings ++ publishSettings
+val mimaSettings = Seq(
+  mimaBinaryIssueFilters ++= Seq(
+    ProblemFilters.exclude[MissingClassProblem]("io.circe.jackson.package$EnhancedByteArrayOutputStream")
+  )
+)
+
+val allSettings = baseSettings ++ publishSettings ++ mimaSettings
 
 val root = project
   .in(file("."))

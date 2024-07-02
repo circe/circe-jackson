@@ -5,7 +5,7 @@ ThisBuild / crossScalaVersions := Seq("2.13.14", "2.12.19", "3.3.3")
 ThisBuild / scalaVersion := crossScalaVersions.value.head
 ThisBuild / githubWorkflowPublishTargetBranches := Nil
 ThisBuild / startYear := Some(2016)
-ThisBuild / tlBaseVersion := "0.15"
+ThisBuild / tlBaseVersion := "0.14"
 ThisBuild / scalafixAll / skip := tlIsScala3.value
 ThisBuild / ScalafixConfig / skip := tlIsScala3.value
 ThisBuild / tlCiScalafixCheck := false // TODO: Address these in a follow up PR
@@ -50,7 +50,13 @@ def jacksonDependencies(version: String, databindVersion: Option[String] = None)
     "com.fasterxml.jackson.core" % "jackson-databind" % databindVersion.getOrElse(version)
   )
 
-val allSettings = baseSettings ++ publishSettings
+val mimaSettings = Seq(
+  mimaBinaryIssueFilters ++= Seq(
+    ProblemFilters.exclude[MissingClassProblem]("io.circe.jackson.package$EnhancedByteArrayOutputStream")
+  )
+)
+
+val allSettings = baseSettings ++ publishSettings ++ mimaSettings
 
 val root = project
   .in(file("."))
@@ -158,7 +164,8 @@ lazy val jackson213 = project
   .settings(
     moduleName := "circe-jackson213",
     libraryDependencies ++= jacksonDependencies("2.13.5"),
-    Compile / unmanagedSourceDirectories += (ThisBuild / baseDirectory).value / "210"
+    Compile / unmanagedSourceDirectories += (ThisBuild / baseDirectory).value / "210",
+    tlVersionIntroduced := List("2.12", "2.13", "3").map(k => k -> "0.14.2").toMap
   )
 
 lazy val jackson214 = project
@@ -167,7 +174,8 @@ lazy val jackson214 = project
   .settings(
     moduleName := "circe-jackson214",
     libraryDependencies ++= jacksonDependencies("2.14.3"),
-    Compile / unmanagedSourceDirectories += (ThisBuild / baseDirectory).value / "210"
+    Compile / unmanagedSourceDirectories += (ThisBuild / baseDirectory).value / "210",
+    tlVersionIntroduced := List("2.12", "2.13", "3").map(k => k -> "0.14.2").toMap
   )
 lazy val jackson215 = project
   .in(file("215"))
@@ -175,7 +183,8 @@ lazy val jackson215 = project
   .settings(
     moduleName := "circe-jackson215",
     libraryDependencies ++= jacksonDependencies("2.15.4"),
-    Compile / unmanagedSourceDirectories += (ThisBuild / baseDirectory).value / "210"
+    Compile / unmanagedSourceDirectories += (ThisBuild / baseDirectory).value / "210",
+    tlVersionIntroduced := List("2.12", "2.13", "3").map(k => k -> "0.14.2").toMap
   )
 
 lazy val jackson216 = project
@@ -184,7 +193,8 @@ lazy val jackson216 = project
   .settings(
     moduleName := "circe-jackson216",
     libraryDependencies ++= jacksonDependencies("2.16.2"),
-    Compile / unmanagedSourceDirectories += (ThisBuild / baseDirectory).value / "210"
+    Compile / unmanagedSourceDirectories += (ThisBuild / baseDirectory).value / "210",
+    tlVersionIntroduced := List("2.12", "2.13", "3").map(k => k -> "0.14.2").toMap
   )
 
 lazy val jackson217 = project
@@ -193,7 +203,8 @@ lazy val jackson217 = project
   .settings(
     moduleName := "circe-jackson217",
     libraryDependencies ++= jacksonDependencies("2.17.1"),
-    Compile / unmanagedSourceDirectories += (ThisBuild / baseDirectory).value / "210"
+    Compile / unmanagedSourceDirectories += (ThisBuild / baseDirectory).value / "210",
+    tlVersionIntroduced := List("2.12", "2.13", "3").map(k => k -> "0.14.2").toMap
   )
 
 lazy val benchmark = project

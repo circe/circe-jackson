@@ -13,7 +13,7 @@ ThisBuild / tlFatalWarnings := false // TODO: fix by dropping 2.12
 
 val circeVersion = "0.14.9"
 val munitVersion = "1.0.0"
-val previousCirceJacksonVersion = "0.14.0"
+val previousCirceJacksonVersion = "0.15.0"
 val disciplineMunitVersion = "2.0.0"
 
 def priorTo2_13(scalaVersion: String): Boolean =
@@ -50,13 +50,7 @@ def jacksonDependencies(version: String, databindVersion: Option[String] = None)
     "com.fasterxml.jackson.core" % "jackson-databind" % databindVersion.getOrElse(version)
   )
 
-val mimaSettings = Seq(
-  mimaBinaryIssueFilters ++= Seq(
-    ProblemFilters.exclude[MissingClassProblem]("io.circe.jackson.package$EnhancedByteArrayOutputStream")
-  )
-)
-
-val allSettings = baseSettings ++ publishSettings ++ mimaSettings
+val allSettings = baseSettings ++ publishSettings
 
 val root = project
   .in(file("."))

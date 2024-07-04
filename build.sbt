@@ -15,7 +15,7 @@ val compilerOptions = Seq(
   "-Ywarn-numeric-widen"
 )
 
-val circeVersion = "0.14.1"
+val circeVersion = "0.14.9"
 val munitVersion = "0.7.26"
 val previousCirceJacksonVersion = "0.13.0"
 val disciplineMunitVersion = "1.0.9"

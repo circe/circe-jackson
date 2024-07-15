@@ -1,12 +1,34 @@
+/*
+ * Copyright 2016 circe
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package io.circe.jackson
 
-import com.fasterxml.jackson.core.{ JsonParser, JsonTokenId }
-import com.fasterxml.jackson.databind.{ DeserializationContext, JsonDeserializer }
+import com.fasterxml.jackson.core.JsonParser
+import com.fasterxml.jackson.core.JsonTokenId
+import com.fasterxml.jackson.databind.DeserializationContext
+import com.fasterxml.jackson.databind.JsonDeserializer
 import com.fasterxml.jackson.databind.`type`.TypeFactory
-import io.circe.{ Json, JsonBigDecimal }
+import io.circe.Json
+import io.circe.JsonBigDecimal
+
 import java.util.ArrayList
-import scala.annotation.{ switch, tailrec }
-import scala.collection.JavaConverters._
+import scala.annotation.nowarn
+import scala.annotation.switch
+import scala.annotation.tailrec
+import scala.jdk.CollectionConverters._
 
 private[jackson] sealed trait DeserializerContext {
   def addValue(value: Json): DeserializerContext
@@ -30,7 +52,7 @@ private[jackson] final case class ReadingMap(content: ArrayList[(String, Json)])
     throw new Exception("Cannot add a value on an object without a key, malformed JSON object!")
 }
 
-private[jackson] final class CirceJsonDeserializer(factory: TypeFactory, klass: Class[_])
+private[jackson] final class CirceJsonDeserializer(@nowarn factory: TypeFactory, klass: Class[_])
     extends JsonDeserializer[Object]
     with JacksonCompat {
   override final def isCachable: Boolean = true
@@ -48,7 +70,10 @@ private[jackson] final class CirceJsonDeserializer(factory: TypeFactory, klass: 
     ctxt: DeserializationContext,
     parserContext: List[DeserializerContext]
   ): Json = {
-    if (jp.getCurrentToken == null) jp.nextToken()
+    if (jp.getCurrentToken == null) {
+      jp.nextToken()
+      ()
+    }
 
     val (maybeValue, nextContext) = (jp.getCurrentToken.id(): @switch) match {
       case JsonTokenId.ID_NUMBER_INT | JsonTokenId.ID_NUMBER_FLOAT =>
@@ -71,8 +96,8 @@ private[jackson] final class CirceJsonDeserializer(factory: TypeFactory, klass: 
 
       case JsonTokenId.ID_FIELD_NAME =>
         parserContext match {
-          case (c: ReadingMap) :: stack => (None, c.setField(jp.getCurrentName) +: stack)
-          case _                        => throw new RuntimeException("We weren't reading an object, something went wrong")
+          case (c: ReadingMap) :: stack => (None, c.setField(currentName(jp)) +: stack)
+          case _ => throw new RuntimeException("We weren't reading an object, something went wrong")
         }
 
       case JsonTokenId.ID_END_OBJECT =>
@@ -97,8 +122,11 @@ private[jackson] final class CirceJsonDeserializer(factory: TypeFactory, klass: 
       case maybeValue =>
         jp.nextToken()
         val toPass = maybeValue.map { v =>
-          val previous :: stack = nextContext
-          (previous.addValue(v)) +: stack
+          nextContext match {
+            case previous :: stack =>
+              (previous.addValue(v)) +: stack
+            case Nil => nextContext
+          }
         }.getOrElse(nextContext)
 
         deserialize(jp, ctxt, toPass)

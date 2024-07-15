@@ -1,10 +1,33 @@
+/*
+ * Copyright 2016 circe
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package io.circe.jackson
 
 import com.fasterxml.jackson.core.JsonGenerator
-import com.fasterxml.jackson.databind.{ JsonSerializer, SerializerProvider }
-import io.circe.{ Json, JsonBigDecimal, JsonBiggerDecimal, JsonDecimal, JsonDouble, JsonFloat, JsonLong }
+import com.fasterxml.jackson.databind.JsonSerializer
+import com.fasterxml.jackson.databind.SerializerProvider
+import io.circe.Json
+import io.circe.JsonBigDecimal
+import io.circe.JsonBiggerDecimal
+import io.circe.JsonDecimal
+import io.circe.JsonDouble
+import io.circe.JsonFloat
+import io.circe.JsonLong
 
-private[jackson] final object CirceJsonSerializer extends JsonSerializer[Json] {
+private[jackson] object CirceJsonSerializer extends JsonSerializer[Json] {
   import java.math.{ BigDecimal => JBigDecimal, BigInteger }
   import com.fasterxml.jackson.databind.node.{ BigIntegerNode, DecimalNode }
 
@@ -26,7 +49,7 @@ private[jackson] final object CirceJsonSerializer extends JsonSerializer[Json] {
           // configuration is ignored when called from ObjectMapper.valueToTree
           val raw = x.stripTrailingZeros.toPlainString
 
-          if (raw contains ".") json.writeTree(new DecimalNode(new JBigDecimal(raw)))
+          if (raw.contains(".")) json.writeTree(new DecimalNode(new JBigDecimal(raw)))
           else json.writeTree(new BigIntegerNode(new BigInteger(raw)))
       }
     case Json.JString(v)  => json.writeString(v)

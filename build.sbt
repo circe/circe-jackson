@@ -175,7 +175,7 @@ lazy val jackson214 = project
     moduleName := "circe-jackson214",
     libraryDependencies ++= jacksonDependencies("2.14.3"),
     Compile / unmanagedSourceDirectories += (ThisBuild / baseDirectory).value / "210",
-    tlVersionIntroduced := List("2.12", "2.13", "3").map(k => k -> "0.14.2").toMap
+    tlVersionIntroduced := List("2.12", "2.13", "3").map(k => k -> "0.14.1").toMap
   )
 lazy val jackson215 = project
   .in(file("215"))
@@ -184,7 +184,7 @@ lazy val jackson215 = project
     moduleName := "circe-jackson215",
     libraryDependencies ++= jacksonDependencies("2.15.4"),
     Compile / unmanagedSourceDirectories += (ThisBuild / baseDirectory).value / "210",
-    tlVersionIntroduced := List("2.12", "2.13", "3").map(k => k -> "0.14.2").toMap
+    tlVersionIntroduced := List("2.12", "2.13", "3").map(k => k -> "0.14.1").toMap
   )
 
 lazy val jackson216 = project
@@ -194,7 +194,7 @@ lazy val jackson216 = project
     moduleName := "circe-jackson216",
     libraryDependencies ++= jacksonDependencies("2.16.2"),
     Compile / unmanagedSourceDirectories += (ThisBuild / baseDirectory).value / "210",
-    tlVersionIntroduced := List("2.12", "2.13", "3").map(k => k -> "0.14.2").toMap
+    tlVersionIntroduced := List("2.12", "2.13", "3").map(k => k -> "0.14.1").toMap
   )
 
 lazy val jackson217 = project
@@ -204,7 +204,7 @@ lazy val jackson217 = project
     moduleName := "circe-jackson217",
     libraryDependencies ++= jacksonDependencies("2.17.2"),
     Compile / unmanagedSourceDirectories += (ThisBuild / baseDirectory).value / "210",
-    tlVersionIntroduced := List("2.12", "2.13", "3").map(k => k -> "0.14.2").toMap
+    tlVersionIntroduced := List("2.12", "2.13", "3").map(k => k -> "0.14.1").toMap
   )
 
 lazy val benchmark = project

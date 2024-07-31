@@ -3,13 +3,14 @@ import com.typesafe.tools.mima.core._
 ThisBuild / organization := "io.circe"
 ThisBuild / crossScalaVersions := Seq("2.13.14", "2.12.19", "3.3.3")
 ThisBuild / scalaVersion := crossScalaVersions.value.head
-ThisBuild / githubWorkflowPublishTargetBranches := Nil
 ThisBuild / startYear := Some(2016)
 ThisBuild / tlBaseVersion := "0.14"
 ThisBuild / scalafixAll / skip := tlIsScala3.value
 ThisBuild / ScalafixConfig / skip := tlIsScala3.value
 ThisBuild / tlCiScalafixCheck := false // TODO: Address these in a follow up PR
 ThisBuild / tlFatalWarnings := false // TODO: fix by dropping 2.12
+ThisBuild / tlCiReleaseTags := true
+ThisBuild / tlCiReleaseBranches := Nil
 
 val circeVersion = "0.14.9"
 val munitVersion = "1.0.0"

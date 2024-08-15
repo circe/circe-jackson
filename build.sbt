@@ -8,7 +8,7 @@ ThisBuild / tlBaseVersion := "0.14"
 ThisBuild / scalafixAll / skip := tlIsScala3.value
 ThisBuild / ScalafixConfig / skip := tlIsScala3.value
 ThisBuild / tlCiScalafixCheck := false // TODO: Address these in a follow up PR
-ThisBuild / tlFatalWarnings := false // TODO: fix by dropping 2.12
+ThisBuild / tlFatalWarnings := true
 ThisBuild / tlCiReleaseTags := true
 ThisBuild / tlCiReleaseBranches := Nil
 
@@ -37,6 +37,10 @@ val baseSettings = Seq(
     "org.scalameta" %% "munit" % munitVersion % Test,
     "org.scalameta" %% "munit-scalacheck" % munitVersion % Test
   ),
+  scalacOptions ++= {
+    val binVersion = scalaBinaryVersion.value
+    if (priorTo2_13(binVersion)) Nil else List("-Wconf:origin=scala.collection.compat.*:s")
+  },
   Compile / unmanagedSourceDirectories += (ThisBuild / baseDirectory).value / "shared/src/main",
   Test / unmanagedSourceDirectories += (ThisBuild / baseDirectory).value / "shared/src/test",
   Test / unmanagedResourceDirectories += (ThisBuild / baseDirectory).value / "shared/src/test/resources",

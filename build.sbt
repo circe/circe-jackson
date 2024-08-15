@@ -11,6 +11,7 @@ ThisBuild / tlCiScalafixCheck := false // TODO: Address these in a follow up PR
 ThisBuild / tlFatalWarnings := false // TODO: fix by dropping 2.12
 ThisBuild / tlCiReleaseTags := true
 ThisBuild / tlCiReleaseBranches := Nil
+ThisBuild / circeRootOfCodeCoverage := Some("root")
 
 val circeVersion = "0.14.9"
 val munitVersion = "1.0.0"
@@ -26,8 +27,6 @@ def priorTo2_13(scalaVersion: String): Boolean =
 val baseSettings = Seq(
   resolvers ++= Resolver.sonatypeOssRepos("releases"),
   resolvers ++= Resolver.sonatypeOssRepos("snapshots"),
-  coverageHighlighting := true,
-  coverageEnabled := !tlIsScala3.value,
   libraryDependencies ++= Seq(
     "io.circe" %% "circe-core" % circeVersion,
     "org.scala-lang.modules" %% "scala-collection-compat" % "2.12.0",

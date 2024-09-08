@@ -13,7 +13,7 @@ ThisBuild / tlCiReleaseTags := true
 ThisBuild / tlCiReleaseBranches := Nil
 ThisBuild / circeRootOfCodeCoverage := Some("root")
 
-val circeVersion = "0.14.9"
+val circeVersion = "0.14.10"
 val munitVersion = "1.0.0"
 val previousCirceJacksonVersion = "0.15.0"
 val disciplineMunitVersion = "2.0.0"

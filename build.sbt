@@ -14,7 +14,9 @@ ThisBuild / tlCiReleaseBranches := Nil
 ThisBuild / circeRootOfCodeCoverage := Some("root")
 
 val circeVersion = "0.14.10"
-val munitVersion = "1.0.0"
+val munitVersion = "1.0.2"
+val munitScalacheckVersion = "1.0.0"
+
 val previousCirceJacksonVersion = "0.15.0"
 val disciplineMunitVersion = "2.0.0"
 
@@ -34,7 +36,7 @@ val baseSettings = Seq(
     "io.circe" %% "circe-testing" % circeVersion % Test,
     "org.typelevel" %% "discipline-munit" % disciplineMunitVersion % Test,
     "org.scalameta" %% "munit" % munitVersion % Test,
-    "org.scalameta" %% "munit-scalacheck" % munitVersion % Test
+    "org.scalameta" %% "munit-scalacheck" % munitScalacheckVersion % Test
   ),
   Compile / unmanagedSourceDirectories += (ThisBuild / baseDirectory).value / "shared/src/main",
   Test / unmanagedSourceDirectories += (ThisBuild / baseDirectory).value / "shared/src/test",

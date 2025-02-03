@@ -31,7 +31,7 @@ val baseSettings = Seq(
   resolvers ++= Resolver.sonatypeOssRepos("snapshots"),
   libraryDependencies ++= Seq(
     "io.circe" %% "circe-core" % circeVersion,
-    "org.scala-lang.modules" %% "scala-collection-compat" % "2.12.0",
+    "org.scala-lang.modules" %% "scala-collection-compat" % "2.13.0",
     "io.circe" %% "circe-jawn" % circeVersion % Test,
     "io.circe" %% "circe-testing" % circeVersion % Test,
     "org.typelevel" %% "discipline-munit" % disciplineMunitVersion % Test,

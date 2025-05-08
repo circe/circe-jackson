@@ -1,7 +1,7 @@
 import com.typesafe.tools.mima.core._
 
 ThisBuild / organization := "io.circe"
-ThisBuild / crossScalaVersions := Seq("2.13.15", "2.12.20", "3.3.4")
+ThisBuild / crossScalaVersions := Seq("2.13.15", "2.12.20", "3.3.6")
 ThisBuild / scalaVersion := crossScalaVersions.value.head
 ThisBuild / startYear := Some(2016)
 ThisBuild / tlBaseVersion := "0.14"

@@ -1,7 +1,7 @@
 import com.typesafe.tools.mima.core._
 
 ThisBuild / organization := "io.circe"
-ThisBuild / crossScalaVersions := Seq("2.13.15", "2.12.20", "3.3.4")
+ThisBuild / crossScalaVersions := Seq("2.13.15", "2.12.20", "3.3.6")
 ThisBuild / scalaVersion := crossScalaVersions.value.head
 ThisBuild / startYear := Some(2016)
 ThisBuild / tlBaseVersion := "0.14"
@@ -15,7 +15,7 @@ ThisBuild / circeRootOfCodeCoverage := Some("root")
 
 val circeVersion = "0.14.10"
 val munitVersion = "1.0.2"
-val munitScalacheckVersion = "1.0.0"
+val munitScalacheckVersion = "1.1.0"
 
 val previousCirceJacksonVersion = "0.15.0"
 val disciplineMunitVersion = "2.0.0"
@@ -31,7 +31,7 @@ val baseSettings = Seq(
   resolvers ++= Resolver.sonatypeOssRepos("snapshots"),
   libraryDependencies ++= Seq(
     "io.circe" %% "circe-core" % circeVersion,
-    "org.scala-lang.modules" %% "scala-collection-compat" % "2.12.0",
+    "org.scala-lang.modules" %% "scala-collection-compat" % "2.13.0",
     "io.circe" %% "circe-jawn" % circeVersion % Test,
     "io.circe" %% "circe-testing" % circeVersion % Test,
     "org.typelevel" %% "discipline-munit" % disciplineMunitVersion % Test,

@@ -119,7 +119,7 @@ private[jackson] final class CirceJsonDeserializer(@nowarn factory: TypeFactory,
 
     maybeValue match {
       case Some(v) if nextContext.isEmpty => v
-      case maybeValue =>
+      case maybeValue                     =>
         jp.nextToken()
         val toPass = maybeValue.map { v =>
           nextContext match {

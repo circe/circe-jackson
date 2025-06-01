@@ -68,9 +68,9 @@ trait JacksonInstances { this: ArbitraryInstances =>
    */
   def cleanNumber(n: JsonNumber): JsonNumber = n.toString match {
     case SigExpPattern(exp) if !Try(exp.toLong).toOption.exists(_ <= Short.MaxValue.toLong) => replacement
-    case _ =>
+    case _                                                                                  =>
       n match {
-        case v @ JsonDecimal(_) => cleanNumber(JsonBiggerDecimal(v.toBiggerDecimal, v.toString))
+        case v @ JsonDecimal(_)              => cleanNumber(JsonBiggerDecimal(v.toBiggerDecimal, v.toString))
         case v @ JsonBiggerDecimal(value, _) =>
           value.toBigDecimal.map(BigDecimal(_)).fold(replacement) { d =>
             val fromBigDecimal = BiggerDecimal.fromBigDecimal(d.bigDecimal)

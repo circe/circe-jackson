@@ -52,8 +52,8 @@ private[jackson] object CirceJsonSerializer extends JsonSerializer[Json] {
           if (raw.contains(".")) json.writeTree(new DecimalNode(new JBigDecimal(raw)))
           else json.writeTree(new BigIntegerNode(new BigInteger(raw)))
       }
-    case Json.JString(v)  => json.writeString(v)
-    case Json.JBoolean(v) => json.writeBoolean(v)
+    case Json.JString(v)       => json.writeString(v)
+    case Json.JBoolean(v)      => json.writeBoolean(v)
     case Json.JArray(elements) => {
       json.writeStartArray()
       elements.foreach(t => serialize(t, json, provider))

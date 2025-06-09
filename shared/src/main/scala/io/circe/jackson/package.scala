@@ -77,9 +77,9 @@ package object jackson extends WithJacksonMapper with JacksonParser with Jackson
             number.toBigDecimal
               .map(bigDecimal => DecimalNode.valueOf(bigDecimal.underlying))
               .getOrElse(TextNode.valueOf(number.toString))
-          case JsonLong(x)   => LongNode.valueOf(x)
-          case JsonDouble(x) => DoubleNode.valueOf(x)
-          case JsonFloat(x)  => FloatNode.valueOf(x)
+          case JsonLong(x)    => LongNode.valueOf(x)
+          case JsonDouble(x)  => DoubleNode.valueOf(x)
+          case JsonFloat(x)   => FloatNode.valueOf(x)
           case JsonDecimal(x) =>
             try {
               DecimalNode.valueOf(new JBigDecimal(x))
@@ -103,7 +103,7 @@ package object jackson extends WithJacksonMapper with JacksonParser with Jackson
   final def jacksonToCirce(node: JsonNode): Json = node.getNodeType match {
     case JsonNodeType.BOOLEAN => Json.fromBoolean(node.asBoolean)
     case JsonNodeType.STRING  => Json.fromString(node.asText)
-    case JsonNodeType.NUMBER =>
+    case JsonNodeType.NUMBER  =>
       if (node.isFloatingPointNumber) {
         Json.fromBigDecimal(new JBigDecimal(node.asText)) // workaround for rounding problems
       } else {

@@ -14,7 +14,7 @@ ThisBuild / tlCiReleaseBranches := Nil
 ThisBuild / circeRootOfCodeCoverage := Some("root")
 
 val circeVersion = "0.14.10"
-val munitVersion = "1.2.2"
+val munitVersion = "1.2.3"
 val munitScalacheckVersion = "1.2.0"
 
 val previousCirceJacksonVersion = "0.15.0"
